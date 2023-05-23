@@ -1,0 +1,16 @@
+GameStore/.vs
+
+GameStore/GameStore.Web/bin
+GameStore/GameStore.Web/obj
+
+GameStore/GameStore.Api/bin
+GameStore/GameStore.Api/obj
+
+GameStore/GameStore.Domain/bin
+GameStore/GameStore.Domain/obj
+
+GameStore/GameStore.Infrastructure/bin
+GameStore/GameStore.Infrastructure/obj
+
+GameStore/GameStore.IoC/bin
+GameStore/GameStore.IoC/obj
