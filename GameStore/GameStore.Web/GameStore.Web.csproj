@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameStore.Domain\GameStore.Domain.csproj" />
+    <ProjectReference Include="..\GameStore.IoC\GameStore.IoC.csproj" />
   </ItemGroup>
 
 </Project>

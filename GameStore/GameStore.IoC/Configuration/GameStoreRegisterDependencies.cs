@@ -14,11 +14,11 @@ namespace GameStore.IoC.Configuration
     {
         public static void Configure(IServiceCollection services)
         {
-            AddRepositoriesDependencies(services);
+            AddInfrastructureDependencies(services);
             AddServicesDependencies(services);
         }
 
-        private static void AddRepositoriesDependencies(IServiceCollection services)
+        private static void AddInfrastructureDependencies(IServiceCollection services)
         {
             //TODO: Ajustar o repo para scoped quando incluir o BD
             services.AddSingleton<IProdutoRepository, ProdutoRepository>();

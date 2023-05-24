@@ -12,7 +12,7 @@ namespace GameStore.Web.Controllers
 
         public SimpleController(IConfiguration configuration)
         {
-            _url_base_address = configuration.GetSection("Endpoints").GetValue<string>("API_PRODUTOS");
+            _url_base_address = configuration.GetSection("Endpoints").GetValue<string>("API_SIMPLES");
             _httpClient = new HttpClient();
         }
 
