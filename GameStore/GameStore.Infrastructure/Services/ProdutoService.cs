@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Entities;
+﻿using GameStore.Domain.Dtos;
+using GameStore.Domain.Entities;
 using GameStore.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,9 @@ namespace GameStore.Infrastructure.Services
             _repository = repository;
         }
 
-        public void Create(Produto produto)
+        public void Create(ProdutoDto produtoDto)
         {
+            Produto produto = produtoDto.ConvertToEntity();
             _repository.Create(produto);
         }
 
@@ -27,19 +29,24 @@ namespace GameStore.Infrastructure.Services
             return _repository.Delete(id);
         }
 
-        public List<Produto> GetAll()
+        public List<ProdutoDto> GetAll()
         {
-            return _repository.GetAll();
+            var produtos = _repository.GetAll();
+            var produtosDto = Produto.ConvertToDto(produtos);
+            return produtosDto;
         }
 
-        public Produto? GetById(int id)
+        public ProdutoDto? GetById(int id)
         {
-            return _repository.GetById(id);
+            var produto = _repository.GetById(id);
+            ProdutoDto produtoDto = Produto.ConvertToDto(produto);
+            return produtoDto;
         }
 
-        public void Update(Produto entity)
+        public void Update(ProdutoDto produtoDto)
         {
-            _repository.Update(entity);
+            Produto produto = produtoDto.ConvertToEntity();
+            _repository.Update(produto);
         }
     }
 }
