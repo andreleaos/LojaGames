@@ -54,6 +54,7 @@ namespace GameStore.Domain.Entities
             if (content is not null)
                 base64 = Convert.ToBase64String(content);
 
+            // TODO: ver algoritmo para reducao de texto
             return base64;
         }
     }
