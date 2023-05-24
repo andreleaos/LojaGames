@@ -12,7 +12,7 @@ namespace GameStore.Web.Controllers
 
         public SimpleController(IConfiguration configuration)
         {
-            _url_base_address = configuration.GetSection("Endpoints").GetValue<string>("Api");
+            _url_base_address = configuration.GetSection("Endpoints").GetValue<string>("API_PRODUTOS");
             _httpClient = new HttpClient();
         }
 
@@ -20,10 +20,8 @@ namespace GameStore.Web.Controllers
         {
             try
             {
-                string endpointApi = $"{_url_base_address}api/simple";
-
                 _httpClient.BaseAddress = new Uri(_url_base_address);
-                HttpResponseMessage response = await _httpClient.GetAsync(endpointApi);
+                HttpResponseMessage response = await _httpClient.GetAsync(_url_base_address);
 
                 var content = response.Content.ReadAsStringAsync().Result;
                 var result = JsonConvert.DeserializeObject<Produto>(content);

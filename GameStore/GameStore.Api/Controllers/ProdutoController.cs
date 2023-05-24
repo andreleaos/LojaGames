@@ -20,7 +20,7 @@ namespace GameStore.Api.Controllers
         }
 
         [HttpPost]
-        public void Create([Bind("Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public void Create(ProdutoDto produto)
         {
             _produtoService.Create(produto);
         }
@@ -46,7 +46,7 @@ namespace GameStore.Api.Controllers
         }
 
         [HttpPut]
-        public void Update([Bind("Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public void Update(ProdutoDto produto)
         {
             _produtoService.Update(produto);
         }

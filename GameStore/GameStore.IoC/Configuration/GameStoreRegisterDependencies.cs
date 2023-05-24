@@ -26,6 +26,7 @@ namespace GameStore.IoC.Configuration
         private static void AddServicesDependencies(IServiceCollection services)
         {
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IApiProdutoService, ApiProdutoService>();
         }
     }
 }
