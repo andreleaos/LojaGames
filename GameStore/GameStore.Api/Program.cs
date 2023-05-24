@@ -1,3 +1,5 @@
+using GameStore.IoC.Configuration;
+
 namespace GameStore.Api
 {
     public class Program
@@ -5,6 +7,8 @@ namespace GameStore.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            GameStoreRegisterDependencies.Configure(builder.Services);
 
             // Add services to the container.
 
