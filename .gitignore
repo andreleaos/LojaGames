@@ -14,3 +14,6 @@ GameStore/GameStore.Infrastructure/obj
 
 GameStore/GameStore.IoC/bin
 GameStore/GameStore.IoC/obj
+
+GameStore/GameStore.Service/bin
+GameStore/GameStore.Service/obj
