@@ -23,8 +23,10 @@ namespace GameStore.Domain.Entities
                 Id = this.Id,
                 Descricao = this.Descricao,
                 PrecoUnitario = this.PrecoUnitario,
-                Categoria = this.Categoria,
-                ImagemProduto = this.ImagemProduto
+                Categoria = this.Categoria.ToString(),
+                CategoriaProduto = this.Categoria,
+                ImagemProduto = this.ImagemProduto,
+                UrlImagem = this.ImagemProduto.Url
             };
         }
         public static ProdutoDto ConvertToDto(Produto produto)
@@ -34,8 +36,10 @@ namespace GameStore.Domain.Entities
                 Id = produto.Id,
                 Descricao = produto.Descricao,
                 PrecoUnitario = produto.PrecoUnitario,
-                Categoria = produto.Categoria,
-                ImagemProduto = produto.ImagemProduto
+                Categoria = produto.Categoria.ToString(),
+                CategoriaProduto = produto.Categoria,
+                ImagemProduto = produto.ImagemProduto,
+                UrlImagem = produto.ImagemProduto.Url
             };
         }
         public static List<ProdutoDto> ConvertToDto(List<Produto> produtos)

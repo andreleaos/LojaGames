@@ -9,6 +9,8 @@ namespace GameStore.Domain.Enums
 {
     public enum CategoriaProduto
     {
+        [Display(Name = "Nulo")]
+        Nulo = 0,
         [Display(Name = "Console")]
         Console = 1,
         [Display(Name = "Game")]
