@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Infrastructure.Services
+namespace GameStore.Service.Services
 {
     public class ProdutoService : IProdutoService
     {
@@ -49,4 +49,5 @@ namespace GameStore.Infrastructure.Services
             _repository.Update(produto);
         }
     }
+
 }

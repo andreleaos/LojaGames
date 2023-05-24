@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameStore.Infrastructure\GameStore.Infrastructure.csproj" />
+    <ProjectReference Include="..\GameStore.Service\GameStore.Service.csproj" />
   </ItemGroup>
 
 </Project>

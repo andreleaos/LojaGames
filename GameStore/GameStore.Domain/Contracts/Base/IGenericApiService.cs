@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Infrastructure.Base
+namespace GameStore.Domain.Contracts.Base
 {
-    public interface IGenericApiService <T, Y>
+    public interface IGenericApiService<T, Y>
     {
         Task Create(T entity);
         Task<T?> GetById(Y id);

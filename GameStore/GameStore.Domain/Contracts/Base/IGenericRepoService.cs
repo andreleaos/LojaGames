@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Infrastructure.Base
+namespace GameStore.Domain.Contracts.Base
 {
     public interface IGenericRepoService<T, Y>
     {

@@ -1,5 +1,6 @@
 ﻿using GameStore.Infrastructure.Data.Repositories;
-using GameStore.Infrastructure.Services;
+using GameStore.Service.Api;
+using GameStore.Service.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

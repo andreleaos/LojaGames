@@ -1,5 +1,5 @@
-﻿using GameStore.Domain.Entities;
-using GameStore.Infrastructure.Base;
+﻿using GameStore.Domain.Contracts.Base;
+using GameStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

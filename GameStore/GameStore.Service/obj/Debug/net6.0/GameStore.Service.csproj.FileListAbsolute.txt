@@ -1,0 +1,17 @@
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Service.deps.json
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Service.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Service.pdb
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.csproj.AssemblyReference.cache
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.AssemblyInfoInputs.cache
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.AssemblyInfo.cs
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.csproj.CoreCompileInputs.cache
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\refint\GameStore.Service.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.pdb
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\ref\GameStore.Service.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Domain.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Infrastructure.dll
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Domain.pdb
+C:\Repo\LojaGames\GameStore\GameStore.Service\bin\Debug\net6.0\GameStore.Infrastructure.pdb
+C:\Repo\LojaGames\GameStore\GameStore.Service\obj\Debug\net6.0\GameStore.Service.csproj.CopyComplete

@@ -1,13 +1,12 @@
-﻿using GameStore.Domain.Dtos;
-using GameStore.Domain.Entities;
-using GameStore.Infrastructure.Base;
+﻿using GameStore.Domain.Contracts.Base;
+using GameStore.Domain.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Infrastructure.Services
+namespace GameStore.Service.Services
 {
     public interface IProdutoService : IGenericRepoService<ProdutoDto, int>
     {

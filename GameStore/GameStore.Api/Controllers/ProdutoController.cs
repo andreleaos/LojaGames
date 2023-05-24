@@ -1,8 +1,8 @@
 ﻿using GameStore.Api.Controllers.Base;
+using GameStore.Domain.Contracts.Base;
 using GameStore.Domain.Dtos;
 using GameStore.Domain.Entities;
-using GameStore.Infrastructure.Base;
-using GameStore.Infrastructure.Services;
+using GameStore.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

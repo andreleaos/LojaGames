@@ -4,12 +4,11 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Infrastructure.Services
+namespace GameStore.Service.Api
 {
     public class ApiProdutoService : IApiProdutoService
     {
@@ -79,8 +78,8 @@ namespace GameStore.Infrastructure.Services
         }
         private HttpContent FormatContentData(Produto produto)
         {
-            if(produto == null)
-                    throw new Exception("Produto Informado Nulo, não é possível realizar a conversão de tipo de dados");
+            if (produto == null)
+                throw new Exception("Produto Informado Nulo, não é possível realizar a conversão de tipo de dados");
 
             var json = JsonConvert.SerializeObject(produto);
             byte[] data = Encoding.UTF8.GetBytes(json);
