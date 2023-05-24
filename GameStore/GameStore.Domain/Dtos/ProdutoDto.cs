@@ -14,6 +14,40 @@ namespace GameStore.Domain.Dtos
         public string Descricao { get; set; }
         public double PrecoUnitario { get; set; }
         public CategoriaProduto Categoria { get; set; }
-        public string UrlProduto { get; set; }
+        public ImagemProduto ImagemProduto { get; set; }
+
+        public Produto ConvertToEntity()
+        {
+            return new Produto
+            {
+                Id = this.Id,
+                Descricao = this.Descricao,
+                PrecoUnitario = this.PrecoUnitario,
+                Categoria = this.Categoria,
+                ImagemProduto = this.ImagemProduto
+            };
+        }
+        public static Produto ConvertToEntity(ProdutoDto produto)
+        {
+            return new Produto
+            {
+                Id = produto.Id,
+                Descricao = produto.Descricao,
+                PrecoUnitario = produto.PrecoUnitario,
+                Categoria = produto.Categoria,
+                ImagemProduto = produto.ImagemProduto
+            };
+        }
+        public static List<Produto> ConvertToEntity(List<ProdutoDto> produtosDto)
+        {
+            var produtos = new List<Produto>();
+
+            foreach(ProdutoDto item in produtosDto)
+            {
+                produtos.Add(ConvertToEntity(item));
+            }
+
+            return produtos;
+        }
     }
 }
