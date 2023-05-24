@@ -18,6 +18,15 @@ namespace GameStore.Domain.Dtos
         public CategoriaProduto CategoriaProduto { get; set; }
         public string UrlImagem { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
+        public string PrecoCurrencyFormat
+        {
+            get
+            {
+                string precoFormat = Math.Round(PrecoUnitario, 3).ToString();
+                return $"R$ {precoFormat}";
+            }
+        }
+
 
         public Produto ConvertToEntity()
         {

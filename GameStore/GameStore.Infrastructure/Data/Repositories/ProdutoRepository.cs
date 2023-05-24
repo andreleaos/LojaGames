@@ -96,12 +96,15 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         public List<Produto> GetAll()
         {
-            return _produtos.OrderBy(p => p.Descricao).ToList();
+            var result = _produtos.OrderBy(p => p.Descricao).ToList();
+            CleanerImageContentData(result);
+            return result;
         }
 
         public Produto? GetById(int id)
         {
-            return _produtos.FirstOrDefault(p => p.Id == id);
+            var produto = _produtos.FirstOrDefault(p => p.Id == id);
+            return produto;
         }
 
         public void Update(Produto entity)
@@ -112,6 +115,42 @@ namespace GameStore.Infrastructure.Data.Repositories
                 _produtos.Remove(produto);
                 _produtos.Add(entity);
             }
+        }
+
+        private List<Produto> CleanerImageContentData(List<Produto> produtos)
+        {
+            var result = new List<Produto>();
+
+            foreach (var produto in produtos)
+            {
+                var item = CleanerImageContentData(produto);
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+        private Produto CleanerImageContentData(Produto produto)
+        {
+            var result = new Produto
+            {
+                Id = produto.Id,
+                Descricao = produto.Descricao,
+                Categoria = produto.Categoria,
+                ImagemProduto = new ImagemProduto
+                {
+                    Id = produto.ImagemProduto.Id,
+                    Url = produto.ImagemProduto.Url,
+                    DataStream = produto.ImagemProduto.DataStream,
+                    Database64Content = produto.ImagemProduto.Database64Content
+                },
+                PrecoUnitario = produto.PrecoUnitario
+            };
+
+            result.ImagemProduto.DataStream = null;
+            result.ImagemProduto.Database64Content = null;
+
+            return result;
         }
     }
 }

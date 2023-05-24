@@ -18,7 +18,8 @@ namespace GameStore.Service.Api
         private string _url_base_address = string.Empty;
         public ApiProdutoService(IConfiguration configuration)
         {
-            _url_base_address = configuration["Endpoints/API_PRODUTOS"];
+            _url_base_address = configuration["Endpoints:API_PRODUTOS"];
+            _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
         }
 
