@@ -17,3 +17,6 @@ GameStore/GameStore.IoC/obj
 
 GameStore/GameStore.Service/bin
 GameStore/GameStore.Service/obj
+
+GameStore/GameStore.Service/bin/*
+GameStore/GameStore.Service/obj/*
