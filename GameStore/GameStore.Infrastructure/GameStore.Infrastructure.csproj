@@ -10,4 +10,8 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GameStore.Domain\GameStore.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
