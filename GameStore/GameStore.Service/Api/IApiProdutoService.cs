@@ -1,4 +1,5 @@
 ﻿using GameStore.Domain.Contracts.Base;
+using GameStore.Domain.Dtos;
 using GameStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameStore.Service.Api
 {
-    public interface IApiProdutoService : IGenericApiService<Produto, int>
+    public interface IApiProdutoService : IGenericApiService<ProdutoDto, int>
     {
 
     }

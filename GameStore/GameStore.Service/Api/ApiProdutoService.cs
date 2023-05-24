@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Entities;
+﻿using GameStore.Domain.Dtos;
+using GameStore.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -21,7 +22,7 @@ namespace GameStore.Service.Api
             _httpClient.BaseAddress = new Uri(_url_base_address);
         }
 
-        public async Task Create(Produto produto)
+        public async Task Create(ProdutoDto produto)
         {
             string endpoint = $"{_url_base_address}";
             HttpContent content = FormatContentData(produto);
@@ -44,25 +45,25 @@ namespace GameStore.Service.Api
             var result = JsonConvert.DeserializeObject<bool>(content);
             return result;
         }
-        public async Task<List<Produto>> GetAll()
+        public async Task<List<ProdutoDto>> GetAll()
         {
             string endpoint = $"{_url_base_address}";
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
 
             var content = response.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<List<Produto>>(content);
+            var result = JsonConvert.DeserializeObject<List<ProdutoDto>>(content);
             return result;
         }
-        public async Task<Produto?> GetById(int id)
+        public async Task<ProdutoDto?> GetById(int id)
         {
             string endpoint = $"{_url_base_address}/{id}";
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
 
             var content = response.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<Produto>(content);
+            var result = JsonConvert.DeserializeObject<ProdutoDto>(content);
             return result;
         }
-        public async Task Update(Produto produto)
+        public async Task Update(ProdutoDto produto)
         {
             string endpoint = $"{_url_base_address}";
             HttpContent content = FormatContentData(produto);
@@ -76,7 +77,7 @@ namespace GameStore.Service.Api
                 throw new Exception($"Falha ao realizar o cadastro. {errormsg}");
             }
         }
-        private HttpContent FormatContentData(Produto produto)
+        private HttpContent FormatContentData(ProdutoDto produto)
         {
             if (produto == null)
                 throw new Exception("Produto Informado Nulo, não é possível realizar a conversão de tipo de dados");
