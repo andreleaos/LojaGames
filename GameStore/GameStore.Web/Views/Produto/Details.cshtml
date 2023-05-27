@@ -9,33 +9,35 @@
 <div>
     <h4>Detalhes</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecoUnitario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecoCurrencyFormat)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-        <img src="data:image/png;base64,@Model.ImagemProduto.Database64Content" alt="Imagem" class="imagem-produto" />
-    </dl>
+    <div class="form-container">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PrecoUnitario)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PrecoCurrencyFormat)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Categoria)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Categoria)
+            </dd>
+            <img src="data:image/png;base64,@Model.ImagemProduto.Database64Content" alt="Imagem" class="imagem-produto" />
+        </dl>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
