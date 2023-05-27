@@ -25,8 +25,10 @@ namespace GameStore.Service.Api
 
         public async Task Create(ProdutoDto produto)
         {
+            var produtoDto = CompletedProductData(produto);
+
             string endpoint = $"{_url_base_address}";
-            HttpContent content = FormatContentData(produto);
+            HttpContent content = FormatContentData(produtoDto);
             HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
 
             if (response.IsSuccessStatusCode)
@@ -66,8 +68,10 @@ namespace GameStore.Service.Api
         }
         public async Task Update(ProdutoDto produto)
         {
+            var produtoDto = CompletedProductData(produto);
+
             string endpoint = $"{_url_base_address}";
-            HttpContent content = FormatContentData(produto);
+            HttpContent content = FormatContentData(produtoDto);
             HttpResponseMessage response = await _httpClient.PutAsync(endpoint, content);
 
             if (response.IsSuccessStatusCode)
@@ -78,6 +82,16 @@ namespace GameStore.Service.Api
                 throw new Exception($"Falha ao realizar o cadastro. {errormsg}");
             }
         }
+
+        private ProdutoDto CompletedProductData(ProdutoDto produtoDto)
+        {
+            Produto produto = produtoDto.ConvertToEntity();
+            ProdutoDto result = produtoDto;
+            result.ImagemProduto = produto.ImagemProduto;
+            result.CategoriaProduto = produto.Categoria;
+            return result;
+        }
+
         private HttpContent FormatContentData(ProdutoDto produto)
         {
             if (produto == null)

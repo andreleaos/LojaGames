@@ -31,6 +31,9 @@ namespace GameStore.Domain.Entities
         }
         public static ProdutoDto ConvertToDto(Produto produto)
         {
+            if (produto == null)
+                return null;
+
             return new ProdutoDto
             {
                 Id = produto.Id,

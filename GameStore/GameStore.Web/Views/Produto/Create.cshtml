@@ -1,0 +1,48 @@
+﻿@model GameStore.Domain.Dtos.ProdutoDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Gestão de Produtos</h3>
+
+<h4>Cadastro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecoUnitario" class="control-label"></label>
+                <input asp-for="PrecoUnitario" class="form-control" />
+                <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlImagem" class="control-label"></label>
+                <input asp-for="UrlImagem" class="form-control" />
+                <span asp-validation-for="UrlImagem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

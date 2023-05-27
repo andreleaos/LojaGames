@@ -77,9 +77,11 @@ namespace GameStore.Infrastructure.Data.Repositories
             _produtos.Add(produto);
         }
 
-        public void Create(Produto entity)
+        public void Create(Produto produto)
         {
-            _produtos.Add(entity);
+            produto.Id = _produtos.Count + 1;
+            produto.ImagemProduto.Id = produto.Id;
+            _produtos.Add(produto);
         }
 
         public bool Delete(int id)
@@ -110,6 +112,8 @@ namespace GameStore.Infrastructure.Data.Repositories
         public void Update(Produto entity)
         {
             Produto? produto = GetById(entity.Id);
+            entity.ImagemProduto.Id = produto.Id;
+
             if (produto != null)
             {
                 _produtos.Remove(produto);
