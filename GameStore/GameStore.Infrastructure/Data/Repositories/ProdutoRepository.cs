@@ -1,7 +1,11 @@
-﻿using GameStore.Domain.Entities;
+﻿using Dapper;
+using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,87 +14,42 @@ namespace GameStore.Infrastructure.Data.Repositories
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        private static List<Produto> _produtos;
-
-        public ProdutoRepository()
+        private static string _connectionString = string.Empty;
+        public ProdutoRepository(IConfiguration configuration)
         {
-            _produtos = new List<Produto>();
-            CarregarDados();
-        }
-
-        private void CarregarDados()
-        {
-            string url = @"C:\Repo\LojaGames\GameStore\GameStore.Infrastructure\Images\Fifa23.png";
-
-            ImagemProduto imagem = new ImagemProduto(1, url);
-
-            Produto produto = new Produto()
-            {
-                Id = 1,
-                Descricao = "Fifa 23 PS4",
-                PrecoUnitario = 79.90,
-                Categoria = CategoriaProduto.Game,
-                ImagemProduto = imagem
-            };
-            _produtos.Add(produto);
-
-            url = @"C:\Repo\LojaGames\GameStore\GameStore.Infrastructure\Images\f1_22_ps4.jpg";
-
-            imagem = new ImagemProduto(2, url);
-
-            produto = new Produto()
-            {
-                Id = 2,
-                Descricao = "F1 22 PS4",
-                PrecoUnitario = 129.90,
-                Categoria = CategoriaProduto.Game,
-                ImagemProduto = imagem
-            };
-            _produtos.Add(produto);
-
-            url = @"C:\Repo\LojaGames\GameStore\GameStore.Infrastructure\Images\mk_11_ps4.jpg";
-
-            imagem = new ImagemProduto(3, url);
-
-            produto = new Produto()
-            {
-                Id = 3,
-                Descricao = "Mortal Kombat PS4",
-                PrecoUnitario = 109.90,
-                Categoria = CategoriaProduto.Game,
-                ImagemProduto = imagem
-            };
-            _produtos.Add(produto);
-
-            url = @"C:\Repo\LojaGames\GameStore\GameStore.Infrastructure\Images\sfv_ps4.jpg";
-
-            imagem = new ImagemProduto(4, url);
-
-            produto = new Produto()
-            {
-                Id = 4,
-                Descricao = "Street Fighter V PS4",
-                PrecoUnitario = 89.90,
-                Categoria = CategoriaProduto.Game,
-                ImagemProduto = imagem
-            };
-            _produtos.Add(produto);
+            _connectionString = configuration.GetConnectionString("lojaGamesDB");
         }
 
         public void Create(Produto produto)
         {
-            produto.Id = _produtos.Count + 1;
-            produto.ImagemProduto.Id = produto.Id;
-            _produtos.Add(produto);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_IMAGEM);
+                connection.Execute(sql, produto);
+
+                sql = SqlManager.GetSql(TSqlQuery.PESAQUISAR_IMAGEM_PELA_URL);
+                var imagemPesquisa = connection.QueryFirstOrDefault<ImagemProduto>(sql, produto);
+
+                produto.ImagemProduto.Id = imagemPesquisa.Id;
+                produto.ImagemId = imagemPesquisa.Id;
+                sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_PRODUTO);
+                connection.Execute(sql, produto);
+            }
         }
 
         public bool Delete(int id)
         {
-            Produto? produto = GetById(id);
-            if (produto != null)
+            if (id > 0)
             {
-                _produtos.Remove(produto);
-                return true;
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_PRODUTO);
+                    connection.Execute(sql, new { Id = id });
+                    return true;
+                }
             }
 
             return false;
@@ -98,26 +57,40 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         public List<Produto> GetAll()
         {
-            var result = _produtos.OrderBy(p => p.Descricao).ToList();
-            CleanerImageContentData(result);
+            List<Produto> result = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string sql = SqlManager.GetSql(TSqlQuery.LISTAR_PRODUTO);
+                result = connection.Query<Produto>(sql).ToList();
+            }
+
+            result = CleanerImageContentData(result);
             return result;
         }
-
         public Produto? GetById(int id)
         {
-            var produto = _produtos.FirstOrDefault(p => p.Id == id);
+            Produto? produto = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string sql = SqlManager.GetSql(TSqlQuery.PESQUISAR_PRODUTO);
+                produto = connection.QueryFirstOrDefault<Produto>(sql, new { Id = id });
+            }
+
+            CompleteData(produto);
             return produto;
         }
 
-        public void Update(Produto entity)
+        public void Update(Produto produto)
         {
-            Produto? produto = GetById(entity.Id);
-            entity.ImagemProduto.Id = produto.Id;
-
-            if (produto != null)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                _produtos.Remove(produto);
-                _produtos.Add(entity);
+                connection.Open();
+                var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
+                connection.Execute(sql, produto);
             }
         }
 
@@ -133,7 +106,6 @@ namespace GameStore.Infrastructure.Data.Repositories
 
             return result;
         }
-
         private Produto CleanerImageContentData(Produto produto)
         {
             var result = new Produto
@@ -141,20 +113,29 @@ namespace GameStore.Infrastructure.Data.Repositories
                 Id = produto.Id,
                 Descricao = produto.Descricao,
                 Categoria = produto.Categoria,
-                ImagemProduto = new ImagemProduto
+                PrecoUnitario = produto.PrecoUnitario
+            };
+
+            if (produto.ImagemProduto != null)
+            {
+                result.ImagemProduto = new ImagemProduto
                 {
                     Id = produto.ImagemProduto.Id,
                     Url = produto.ImagemProduto.Url,
                     DataStream = produto.ImagemProduto.DataStream,
                     Database64Content = produto.ImagemProduto.Database64Content
-                },
-                PrecoUnitario = produto.PrecoUnitario
-            };
+                };
 
-            result.ImagemProduto.DataStream = null;
-            result.ImagemProduto.Database64Content = null;
+                result.ImagemProduto.DataStream = null;
+                result.ImagemProduto.Database64Content = null;
+            }
 
             return result;
         }
+
+        private void CompleteData(Produto produto)
+        {
+            produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
+        } 
     }
 }

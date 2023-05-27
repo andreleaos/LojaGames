@@ -16,6 +16,17 @@ namespace GameStore.Domain.Entities
         public CategoriaProduto Categoria { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
 
+        public int ImagemId { get; set; }
+        public string Url { get; set; }
+        public int CategoriaId { get { return Categoria.GetHashCode(); } }
+        public string Url_path
+        {
+            get
+            {
+                return ImagemProduto.Url;
+            }
+        }
+
         public ProdutoDto ConvertToDto()
         {
             return new ProdutoDto
@@ -34,16 +45,22 @@ namespace GameStore.Domain.Entities
             if (produto == null)
                 return null;
 
-            return new ProdutoDto
+            var result = new ProdutoDto
             {
                 Id = produto.Id,
                 Descricao = produto.Descricao,
                 PrecoUnitario = produto.PrecoUnitario,
                 Categoria = produto.Categoria.ToString(),
-                CategoriaProduto = produto.Categoria,
-                ImagemProduto = produto.ImagemProduto,
-                UrlImagem = produto.ImagemProduto.Url
+                CategoriaProduto = produto.Categoria
             };
+
+            if (produto.ImagemProduto != null)
+            {
+                result.ImagemProduto = produto.ImagemProduto;
+                result.UrlImagem = produto.ImagemProduto.Url;
+            }
+
+            return result;    
         }
         public static List<ProdutoDto> ConvertToDto(List<Produto> produtos)
         {
