@@ -20,8 +20,7 @@ namespace GameStore.IoC.Configuration
 
         private static void AddInfrastructureDependencies(IServiceCollection services)
         {
-            //TODO: Ajustar o repo para scoped quando incluir o BD
-            services.AddSingleton<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
         }
 
         private static void AddServicesDependencies(IServiceCollection services)
