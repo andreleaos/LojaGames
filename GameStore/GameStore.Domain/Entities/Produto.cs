@@ -18,6 +18,7 @@ namespace GameStore.Domain.Entities
 
         public int ImagemId { get; set; }
         public string Url { get; set; }
+        public string UrlBlobStorage { get; set; }
         public int CategoriaId { get { return Categoria.GetHashCode(); } }
         public string Url_path
         {
@@ -26,6 +27,15 @@ namespace GameStore.Domain.Entities
                 return ImagemProduto.Url;
             }
         }
+
+        public string Url_Blob_Storage
+        {
+            get
+            {
+                return ImagemProduto.UrlBlobStorage;
+            }
+        }
+
 
         public ProdutoDto ConvertToDto()
         {
@@ -37,7 +47,8 @@ namespace GameStore.Domain.Entities
                 Categoria = this.Categoria.ToString(),
                 CategoriaProduto = this.Categoria,
                 ImagemProduto = this.ImagemProduto,
-                UrlImagem = this.ImagemProduto.Url
+                UrlImagem = this.ImagemProduto.Url,
+                UrlBlobStorage = this.UrlBlobStorage
             };
         }
         public static ProdutoDto ConvertToDto(Produto produto)
@@ -58,6 +69,7 @@ namespace GameStore.Domain.Entities
             {
                 result.ImagemProduto = produto.ImagemProduto;
                 result.UrlImagem = produto.ImagemProduto.Url;
+                result.UrlBlobStorage = produto.UrlBlobStorage;
             }
 
             return result;    

@@ -10,6 +10,7 @@ namespace GameStore.Domain.Entities
     {
         public int Id { get; set; }
         public string Url { get; set; }
+        public string UrlBlobStorage { get; set; }
         public byte[] DataStream { get; set; }
         public string Database64Content { get; set; }
 

@@ -17,6 +17,7 @@ namespace GameStore.Domain.Dtos
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
         public string UrlImagem { get; set; }
+        public string UrlBlobStorage { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
         public string PrecoCurrencyFormat
         {
@@ -39,7 +40,8 @@ namespace GameStore.Domain.Dtos
                 Descricao = this.Descricao,
                 PrecoUnitario = this.PrecoUnitario,
                 Categoria = CategoriaProduto,
-                ImagemProduto = this.ImagemProduto
+                ImagemProduto = this.ImagemProduto,
+                UrlBlobStorage = this.UrlBlobStorage,
             };
         }
         public static Produto ConvertToEntity(ProdutoDto produto)
@@ -53,7 +55,8 @@ namespace GameStore.Domain.Dtos
                 Descricao = produto.Descricao,
                 PrecoUnitario = produto.PrecoUnitario,
                 Categoria = categoriaProduto,
-                ImagemProduto = imagemProduto
+                ImagemProduto = imagemProduto,
+                UrlBlobStorage = produto.UrlBlobStorage
             };
         }
         public static List<Produto> ConvertToEntity(List<ProdutoDto> produtosDto)
