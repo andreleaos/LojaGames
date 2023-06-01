@@ -86,11 +86,22 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         public void Update(Produto produto)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            var produtoPesquisado = GetById(produto.Id);
+
+            if (produtoPesquisado != null)
             {
-                connection.Open();
-                var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
-                connection.Execute(sql, produto);
+                produto.ImagemId = produtoPesquisado.ImagemId;
+                produto.ImagemProduto.Id = produtoPesquisado.ImagemId;
+
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
+                    connection.Execute(sql, produto);
+
+                    sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_IMAGEM);
+                    connection.Execute(sql, produto.ImagemProduto);
+                }
             }
         }
 

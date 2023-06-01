@@ -15,6 +15,7 @@ namespace GameStore.Domain.Enums
         EXCLUIR_PRODUTO,
 
         CADASTRAR_IMAGEM,
+        ATUALIZAR_IMAGEM,
         PESQUISAR_IMAGEM_PELA_URL
     }
 }

@@ -41,6 +41,10 @@ namespace GameStore.Infrastructure.Data.Repositories
                     sql = "insert into imagemProduto (url_path) values (@Url_path)";
                     break;
 
+                case TSqlQuery.ATUALIZAR_IMAGEM:
+                    sql = "update imagemProduto set url_path = @Url where id = @id";
+                    break;
+
                 case TSqlQuery.PESQUISAR_IMAGEM_PELA_URL:
                     sql = "select id 'Id', url_path 'Url' from imagemProduto where url_path = @Url_path";
                     break;
