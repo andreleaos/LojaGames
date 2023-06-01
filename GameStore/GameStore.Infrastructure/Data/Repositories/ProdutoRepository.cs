@@ -146,7 +146,8 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         private void CompleteData(Produto produto)
         {
-            produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
+            if (produto != null)
+                produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
         } 
     }
 }
