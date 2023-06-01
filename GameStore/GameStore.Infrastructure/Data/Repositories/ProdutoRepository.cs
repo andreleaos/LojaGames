@@ -29,7 +29,7 @@ namespace GameStore.Infrastructure.Data.Repositories
                 var sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_IMAGEM);
                 connection.Execute(sql, produto);
 
-                sql = SqlManager.GetSql(TSqlQuery.PESAQUISAR_IMAGEM_PELA_URL);
+                sql = SqlManager.GetSql(TSqlQuery.PESQUISAR_IMAGEM_PELA_URL);
                 var imagemPesquisa = connection.QueryFirstOrDefault<ImagemProduto>(sql, produto);
 
                 produto.ImagemProduto.Id = imagemPesquisa.Id;
