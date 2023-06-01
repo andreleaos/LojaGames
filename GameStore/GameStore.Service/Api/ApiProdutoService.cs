@@ -89,6 +89,8 @@ namespace GameStore.Service.Api
             ProdutoDto result = produtoDto;
             result.ImagemProduto = produto.ImagemProduto;
             result.CategoriaProduto = produto.Categoria;
+            result.UrlBlobStorage = produto.Url_path;
+            result.ImagemProduto.UrlBlobStorage = produto.Url_path;
             return result;
         }
 
