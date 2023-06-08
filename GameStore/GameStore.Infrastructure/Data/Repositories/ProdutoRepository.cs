@@ -48,6 +48,9 @@ namespace GameStore.Infrastructure.Data.Repositories
                     connection.Open();
                     var sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_PRODUTO);
                     connection.Execute(sql, new { Id = id });
+
+                    sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_IMAGEM);
+                    connection.Execute(sql, new { Id = id });
                     return true;
                 }
             }

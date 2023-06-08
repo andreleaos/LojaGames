@@ -16,6 +16,7 @@ namespace GameStore.IoC.Configuration
         {
             AddInfrastructureDependencies(services);
             AddServicesDependencies(services);
+            AddAutoMapper(services);
         }
 
         private static void AddInfrastructureDependencies(IServiceCollection services)
@@ -27,6 +28,11 @@ namespace GameStore.IoC.Configuration
         {
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IApiProdutoService, ApiProdutoService>();
+        }
+
+        private static void AddAutoMapper(IServiceCollection services)
+        {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }

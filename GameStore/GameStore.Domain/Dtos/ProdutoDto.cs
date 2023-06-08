@@ -1,6 +1,7 @@
 ﻿using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using GameStore.Domain.Utils;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,10 @@ namespace GameStore.Domain.Dtos
         {
             get
             {
-                string precoFormat = Math.Round(PrecoUnitario, 3).ToString();
+                string precoFormat = Math.Round(PrecoUnitario, 2).ToString();
                 return $"R$ {precoFormat}";
             }
         }
-
 
         public Produto ConvertToEntity()
         {

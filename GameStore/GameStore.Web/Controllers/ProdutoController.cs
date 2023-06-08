@@ -1,6 +1,5 @@
-﻿using GameStore.Domain.Dtos;
-using GameStore.Domain.Entities;
-using GameStore.Domain.Enums;
+﻿using AutoMapper;
+using GameStore.Domain.Dtos;
 using GameStore.Service.Api;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +8,11 @@ namespace GameStore.Web.Controllers
     public class ProdutoController : Controller
     {
         private readonly IApiProdutoService _apiProdutoService;
-        public ProdutoController(IApiProdutoService apiProdutoService)
+        private IMapper _mapper;
+        public ProdutoController(IApiProdutoService apiProdutoService, IMapper mapper)
         {
             _apiProdutoService = apiProdutoService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -25,9 +26,9 @@ namespace GameStore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Create(ProdutoFormDto produtoForm)
         {
-            await _apiProdutoService.Create(produto);
+            await _apiProdutoService.Create(produtoForm);
             return RedirectToAction("Index");
         }
 
@@ -52,14 +53,15 @@ namespace GameStore.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            ProdutoDto? produto = await _apiProdutoService.GetById(id);
+            ProdutoDto? produtoDto = await _apiProdutoService.GetById(id);
+            ProdutoFormDto produto = _mapper.Map<ProdutoFormDto>(produtoDto);
             return View(produto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Edit(ProdutoFormDto produtoForm)
         {
-            await _apiProdutoService.Update(produto);
+            await _apiProdutoService.Update(produtoForm);
             return RedirectToAction("Index");
         }
     }

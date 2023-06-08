@@ -22,6 +22,7 @@ GO
 CREATE TABLE [dbo].[imagemProduto](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[url_path] [varchar](250) NULL,
+	[url_blob_storage] [varchar](300) NULL,
  CONSTRAINT [PK_imagemProduto] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

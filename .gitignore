@@ -20,3 +20,5 @@ GameStore/GameStore.Service/obj
 
 GameStore/GameStore.Service/bin/*
 GameStore/GameStore.Service/obj/*
+/.vs
+/Azure/Scripts
