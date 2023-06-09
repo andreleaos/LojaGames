@@ -30,6 +30,8 @@ namespace GameStore.Service.Api
         {
             ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
 
+            produto.AtualizarImagemProdutoBase64();
+
             var produtoDto = CompletedProductData(produto);
 
             string endpoint = $"{_url_base_address}";
@@ -74,6 +76,8 @@ namespace GameStore.Service.Api
         public async Task Update(ProdutoFormDto produtoFormDto)
         {
             ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
+
+            produto.AtualizarImagemProdutoBase64();
 
             var produtoDto = CompletedProductData(produto);
 

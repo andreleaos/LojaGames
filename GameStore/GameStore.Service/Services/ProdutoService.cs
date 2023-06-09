@@ -18,13 +18,15 @@ namespace GameStore.Service.Services
 
         private readonly IConfiguration _configuration;
 
-        private static string urlContainerBlobStorage = string.Empty;
-        private static string containerBlobStorage = "images";
+        private static string conectionStorageAccount = string.Empty;
+        private static string containerBlobStorage = string.Empty;
         public ProdutoService(IProdutoRepository repository, IConfiguration configuration)
         {
             _repository = repository;
             _configuration = configuration;
-            urlContainerBlobStorage = _configuration.GetConnectionString("ContainerBlob");
+
+            containerBlobStorage = _configuration.GetSection("ContainerBlobStorage").Value;
+            conectionStorageAccount = _configuration.GetSection("ConnectionStorageAccount").Value;
         }
 
         public void Create(ProdutoDto produtoDto)
@@ -86,7 +88,7 @@ namespace GameStore.Service.Services
             FileInfo fileInfo = new FileInfo(urlImagem);
 
             // Gera um nome randomico para imagem
-            var fileName = Guid.NewGuid().ToString() + fileInfo.Extension; // ".jpg";
+            var fileName = Guid.NewGuid().ToString() + fileInfo.Extension;
 
             // Limpa o hash enviado
             var data = new Regex(@"^data:image\/[a-z]+;base64,").Replace(base64Image, "");
@@ -95,7 +97,7 @@ namespace GameStore.Service.Services
             byte[] imageBytes = Convert.FromBase64String(data);
 
             // Define o BLOB no qual a imagem será armazenada
-            var blobClient = new BlobClient(urlContainerBlobStorage, container, fileName);
+            var blobClient = new BlobClient(conectionStorageAccount, container, fileName);
 
             // Envia a imagem
             using (var stream = new MemoryStream(imageBytes))
@@ -110,12 +112,12 @@ namespace GameStore.Service.Services
             return blobClient.Uri.AbsoluteUri;
         }
 
-        public bool DeleteImageBlobStorage(Uri urlBlobStorage, string container)
+        public bool DeleteImageBlobStorage(Uri urlBlobStorage, string containerBlobStorage)
         {
-            var fileName = urlBlobStorage.LocalPath.Replace("/images/", "");
+            var fileName = urlBlobStorage.LocalPath.Replace("/"+ containerBlobStorage + "/", "");
 
             // Define o BLOB no qual a imagem está armazenada
-            var blobClient = new BlobClient(urlContainerBlobStorage, container, fileName);
+            var blobClient = new BlobClient(conectionStorageAccount, containerBlobStorage, fileName);
 
             var deleted = blobClient.DeleteIfExistsAsync().Result;
 

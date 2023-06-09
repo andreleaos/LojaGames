@@ -28,11 +28,14 @@ namespace GameStore.Domain.Dtos
                 return $"R$ {precoFormat}";
             }
         }
+        public ImagemProduto AtualizarImagemProdutoBase64()
+        {
+            return ImagemProduto = new ImagemProduto(this.UrlImagem);
+        }
 
         public Produto ConvertToEntity()
         {
             CategoriaProduto = ConversorEnums.ConvertToEnum(this.Categoria);
-            ImagemProduto = new ImagemProduto(this.UrlImagem);
 
             return new Produto
             {
