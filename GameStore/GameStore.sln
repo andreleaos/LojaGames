@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.IoC", "GameStore.IoC\GameStore.IoC.csproj", "{A4003103-D2A7-4E29-94E5-10C6157482F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Service", "GameStore.Service\GameStore.Service.csproj", "{67D40F74-95C6-4C0A-90F3-E39AC9A308F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Service", "GameStore.Service\GameStore.Service.csproj", "{67D40F74-95C6-4C0A-90F3-E39AC9A308F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

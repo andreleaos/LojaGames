@@ -20,6 +20,46 @@ namespace GameStore.Domain.Entities
         public string Url { get; set; }
         public string UrlBlobStorage { get; set; }
         public int CategoriaId { get { return Categoria.GetHashCode(); } }
+
+        public Produto(int id, string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
+            : this(descricao, precoUnitario, categoria, imagem)
+        {
+            Id = id;
+        }
+
+        public Produto(string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
+        {
+            this.Descricao = descricao;
+            this.PrecoUnitario = precoUnitario;
+            this.Categoria = categoria;
+            this.ImagemProduto = imagem;
+        }
+
+        public Produto() { }
+
+        public void SetId(int id)
+        {
+            this.Id = id;
+        }
+
+        public void Validate()
+        {
+            if (string.IsNullOrEmpty(Descricao))
+                throw new Exception("Descrição é um campo obrigatório");
+
+            if (PrecoUnitario <= 0)
+                throw new Exception("Preço Unitário é um campo obrigatório e deve ser maior que zero");
+
+            if (PrecoUnitario <= 0)
+                throw new Exception("Preço Unitário é um campo obrigatório e deve ser maior que zero");
+
+            if(CategoriaId  <= 0)
+                throw new Exception("Categoria é um campo obrigatório e deve ser maior que zero");
+
+            if (string.IsNullOrEmpty(Url_path) && string.IsNullOrEmpty(Url_Blob_Storage))
+                throw new Exception("A url da imagem do produto é um campo obrigatório");
+        }
+
         public string Url_path
         {
             get

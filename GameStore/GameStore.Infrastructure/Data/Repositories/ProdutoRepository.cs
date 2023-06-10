@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using GameStore.Domain.ConfigApp;
 using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
+using GameStore.Infrastructure.Config;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,15 @@ namespace GameStore.Infrastructure.Data.Repositories
 {
     public class ProdutoRepository : IProdutoRepository
     {
+        private readonly IConfigParameters _configParameters;
+        private readonly IConfiguration _configuration;
+
         private static string _connectionString = string.Empty;
-        public ProdutoRepository(IConfiguration configuration)
+        public ProdutoRepository(IConfiguration configuration, IConfigParameters configParameters)
         {
-            _connectionString = configuration.GetConnectionString("lojaGamesDB");
+            _configuration = configuration; 
+            _configParameters = configParameters;
+            SetConnectionConfig();
         }
 
         public void Create(Produto produto)
@@ -119,13 +126,7 @@ namespace GameStore.Infrastructure.Data.Repositories
         }
         private Produto CleanerImageContentData(Produto produto)
         {
-            var result = new Produto
-            {
-                Id = produto.Id,
-                Descricao = produto.Descricao,
-                Categoria = produto.Categoria,
-                PrecoUnitario = produto.PrecoUnitario
-            };
+            var result = new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, produto.Categoria, produto.ImagemProduto);
 
             if (produto.ImagemProduto != null)
             {
@@ -143,11 +144,19 @@ namespace GameStore.Infrastructure.Data.Repositories
 
             return result;
         }
-
         private void CompleteData(Produto produto)
         {
             if (produto != null)
                 produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
-        } 
+        }
+
+        private void SetConnectionConfig()
+        {
+            _configParameters.SetGeneralConfig();
+            if (GeneralConfigApp.ENABLE_CONNECTION_LOCAL_DB)
+                _connectionString = _configuration.GetConnectionString("lojaGamesDB_local");
+            else
+                _connectionString = _configuration.GetConnectionString("lojaGamesDB");
+        }
     }
 }

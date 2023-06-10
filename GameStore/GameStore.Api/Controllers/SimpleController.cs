@@ -29,14 +29,7 @@ namespace GameStore.Api.Controllers
 
             ImagemProduto imagem = new ImagemProduto(1, url);
 
-            Produto produto = new Produto()
-            {
-                Id = 1,
-                Descricao = "Fifa 23 PS4",
-                PrecoUnitario = 79.90,
-                Categoria = CategoriaProduto.Game,
-                ImagemProduto = imagem
-            };
+            Produto produto = new Produto(1, "Fifa 23 PS4", 79.90, CategoriaProduto.Game, imagem);
 
             return produto;
         }

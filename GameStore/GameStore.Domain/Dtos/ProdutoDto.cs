@@ -28,37 +28,22 @@ namespace GameStore.Domain.Dtos
             }
         }
 
-
         public Produto ConvertToEntity()
         {
             CategoriaProduto = ConversorEnums.ConvertToEnum(this.Categoria);
             ImagemProduto = new ImagemProduto(this.UrlImagem);
 
-            return new Produto
-            {
-                Id = this.Id,
-                Descricao = this.Descricao,
-                PrecoUnitario = this.PrecoUnitario,
-                Categoria = CategoriaProduto,
-                ImagemProduto = this.ImagemProduto,
-                UrlBlobStorage = this.UrlBlobStorage,
-            };
+            return new Produto(this.Id, this.Descricao, this.PrecoUnitario, CategoriaProduto, this.ImagemProduto);
         }
+
         public static Produto ConvertToEntity(ProdutoDto produto)
         {
             CategoriaProduto categoriaProduto = ConversorEnums.ConvertToEnum(produto.Categoria);
             ImagemProduto imagemProduto = new ImagemProduto(produto.UrlImagem);
 
-            return new Produto
-            {
-                Id = produto.Id,
-                Descricao = produto.Descricao,
-                PrecoUnitario = produto.PrecoUnitario,
-                Categoria = categoriaProduto,
-                ImagemProduto = imagemProduto,
-                UrlBlobStorage = produto.UrlBlobStorage
-            };
+            return new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, categoriaProduto, imagemProduto);
         }
+
         public static List<Produto> ConvertToEntity(List<ProdutoDto> produtosDto)
         {
             var produtos = new List<Produto>();
