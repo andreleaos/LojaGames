@@ -20,7 +20,7 @@ namespace GameStore.Service.Api
         private IMapper _mapper;
         public ApiProdutoService(IConfiguration configuration, IMapper mapper)
         {
-            _url_base_address = configuration["Endpoints:API_PRODUTOS"];
+            _url_base_address = configuration.GetSection("API_PRODUTOS").Value;
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
             _mapper = mapper;
