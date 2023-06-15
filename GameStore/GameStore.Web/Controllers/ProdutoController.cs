@@ -25,8 +25,9 @@ namespace GameStore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Create([Bind("Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
         {
+            produto.ConfigurarPrecoProduto();
             await _apiProdutoService.Create(produto);
             return RedirectToAction("Index");
         }
@@ -53,12 +54,14 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ProdutoDto? produto = await _apiProdutoService.GetById(id);
+            produto.ConfigurarPrecoProduto();
             return View(produto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Edit([Bind("Id, Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
         {
+            produto.ConfigurarPrecoProduto();
             await _apiProdutoService.Update(produto);
             return RedirectToAction("Index");
         }
