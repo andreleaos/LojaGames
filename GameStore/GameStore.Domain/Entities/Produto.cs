@@ -10,23 +10,31 @@ namespace GameStore.Domain.Entities
 {
     public class Produto
     {
-        public int Id { get; set; }
-        public string Descricao { get; set; }
-        public double PrecoUnitario { get; set; }
-        public CategoriaProduto Categoria { get; set; }
-        public ImagemProduto ImagemProduto { get; set; }
+        #region Atributos
 
-        public int ImagemId { get; set; }
-        public string Url { get; set; }
-        public string UrlBlobStorage { get; set; }
+        private int Id;
+        private string Descricao;
+        private double PrecoUnitario;
+        private CategoriaProduto Categoria;
+        private ImagemProduto ImagemProduto;
+        private int ImagemId;
+        private string Url;
+        private string UrlBlobStorage;
+
+        #endregion
+
+        #region Propriedades
         public int CategoriaId { get { return Categoria.GetHashCode(); } }
+
+        #endregion
+
+        #region Construtores
 
         public Produto(int id, string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
             : this(descricao, precoUnitario, categoria, imagem)
         {
             Id = id;
         }
-
         public Produto(string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
         {
             this.Descricao = descricao;
@@ -34,14 +42,32 @@ namespace GameStore.Domain.Entities
             this.Categoria = categoria;
             this.ImagemProduto = imagem;
         }
-
         public Produto() { }
 
-        public void SetId(int id)
-        {
-            this.Id = id;
-        }
+        #endregion
 
+        #region Getters e Setters
+        public int GetId() { return this.Id; }
+        public void SetId(int id) { this.Id = id; }
+        public string GetDescricao() { return this.Descricao; } 
+        public void SetDescricao(string descricao) { this.Descricao = descricao; }
+        public double GetPrecoUnitario() { return this.PrecoUnitario; }
+        public void SetPrecoUnitario(double precoUnitario) { this.PrecoUnitario = precoUnitario; }
+        public CategoriaProduto GetCategoria() { return Categoria; }
+        public void SetCategoria(CategoriaProduto categoria) { this.Categoria = categoria; }
+        public ImagemProduto GetImagemProduto() { return ImagemProduto; }
+        public void SetImagemProduto(ImagemProduto imagemProduto) { this.ImagemProduto = imagemProduto; }
+        public void SetImagemProdutoId(int imagemId) { this.ImagemProduto.Id = imagemId; }
+        public int GetImagemId() { return this.ImagemId; }
+        public void SetImagemId(int imagemId) { this.ImagemId = imagemId; }
+        public string GetUrl() { return this.Url; }
+        public void SetUrl(string url) { this.Url = url; }
+        public string GetUrlBlobStorage() { return this.UrlBlobStorage; }
+        public void SetUrlBlobStorage(string urlBlobStorage) { this.UrlBlobStorage = urlBlobStorage; }
+
+        #endregion
+
+        #region Métodos da classe
         public void Validate()
         {
             if (string.IsNullOrEmpty(Descricao))
@@ -59,7 +85,6 @@ namespace GameStore.Domain.Entities
             if (string.IsNullOrEmpty(Url_path) && string.IsNullOrEmpty(Url_Blob_Storage))
                 throw new Exception("A url da imagem do produto é um campo obrigatório");
         }
-
         public string Url_path
         {
             get
@@ -67,7 +92,6 @@ namespace GameStore.Domain.Entities
                 return ImagemProduto.Url;
             }
         }
-
         public string Url_Blob_Storage
         {
             get
@@ -76,7 +100,15 @@ namespace GameStore.Domain.Entities
             }
         }
 
+        public Produto CreateProductByObjectCopy()
+        {
+            var result = new Produto(this.Id, this.Descricao, this.PrecoUnitario, this.Categoria, this.ImagemProduto);
+            return result;
+        }
 
+        #endregion
+
+        #region Conversores de Entidade - DTO
         public ProdutoDto ConvertToDto()
         {
             return new ProdutoDto
@@ -126,5 +158,6 @@ namespace GameStore.Domain.Entities
             return produtosDto;
         }
 
+        #endregion
     }
 }

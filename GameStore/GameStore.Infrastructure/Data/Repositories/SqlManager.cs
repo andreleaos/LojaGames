@@ -26,11 +26,15 @@ namespace GameStore.Infrastructure.Data.Repositories
                     break;
 
                 case TSqlQuery.CADASTRAR_PRODUTO:
-                    sql = "insert into produto (descricao, precoUnitario, categoriaId, imagemId) values (@descricao, @precoUnitario, @CategoriaId, @ImagemId)";
+                    sql = "insert into produto (descricao, precoUnitario, categoriaId, imagemId) values (@Descricao, @PrecoUnitario, @CategoriaId, @ImagemId)";
                     break;
 
                 case TSqlQuery.ATUALIZAR_PRODUTO:
-                    sql = "update produto set descricao = @descricao, precoUnitario = @precoUnitario where id = @id";
+                    sql = "update produto set descricao = @Descricao, precoUnitario = @PrecoUnitario, categoriaId = @Categoria where id = @id";
+                    break;
+
+                case TSqlQuery.EXCLUIR_IMAGEM:
+                    sql = "delete from imagemProduto where id = @id";
                     break;
 
                 case TSqlQuery.EXCLUIR_PRODUTO:
@@ -38,7 +42,7 @@ namespace GameStore.Infrastructure.Data.Repositories
                     break;
 
                 case TSqlQuery.CADASTRAR_IMAGEM:
-                    sql = "insert into imagemProduto (url_path) values (@Url_path)";
+                    sql = "insert into imagemProduto (url_path) values (@Url_path); SELECT SCOPE_IDENTITY();";
                     break;
 
                 case TSqlQuery.ATUALIZAR_IMAGEM:

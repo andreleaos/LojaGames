@@ -21,6 +21,7 @@ namespace GameStore.Service.Services
         public void Create(ProdutoDto produtoDto)
         {
             Produto produto = produtoDto.ConvertToEntity();
+            produto.Validate();
             _repository.Create(produto);
         }
 
@@ -46,6 +47,7 @@ namespace GameStore.Service.Services
         public void Update(ProdutoDto produtoDto)
         {
             Produto produto = produtoDto.ConvertToEntity();
+            produto.Validate();
             _repository.Update(produto);
         }
     }

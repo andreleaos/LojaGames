@@ -32,17 +32,41 @@ namespace GameStore.Infrastructure.Data.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_IMAGEM);
+                        var imagemId = connection.ExecuteScalar<int>(sql, produto, transaction);
 
-                var sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_IMAGEM);
-                connection.Execute(sql, produto);
+                        produto.SetImagemProdutoId(imagemId);
+                        produto.SetImagemId(imagemId);
 
-                sql = SqlManager.GetSql(TSqlQuery.PESQUISAR_IMAGEM_PELA_URL);
-                var imagemPesquisa = connection.QueryFirstOrDefault<ImagemProduto>(sql, produto);
+                        sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_PRODUTO);
+                        connection.Execute(
+                            sql,
+                            new
+                            {
+                                Descricao = produto.GetDescricao(),
+                                PrecoUnitario = produto.GetPrecoUnitario(),
+                                CategoriaId = produto.CategoriaId,
+                                ImagemId = produto.GetImagemId()
+                            },
+                            transaction
+                        );
 
-                produto.ImagemProduto.Id = imagemPesquisa.Id;
-                produto.ImagemId = imagemPesquisa.Id;
-                sql = SqlManager.GetSql(TSqlQuery.CADASTRAR_PRODUTO);
-                connection.Execute(sql, produto);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception($"Erro ao realizar o cadastro. {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
             }
         }
 
@@ -53,9 +77,19 @@ namespace GameStore.Infrastructure.Data.Repositories
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_PRODUTO);
-                    connection.Execute(sql, new { Id = id });
-                    return true;
+
+                    var sql = SqlManager.GetSql(TSqlQuery.PESQUISAR_PRODUTO);
+                    var produtoPesquisado = connection.QueryFirstOrDefault<Produto>(sql, new { Id = id });
+
+                    if (produtoPesquisado != null)
+                    {
+                        sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_PRODUTO);
+                        connection.Execute(sql, new { Id = produtoPesquisado.GetId() });
+
+                        sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_IMAGEM);
+                        connection.Execute(sql, new { Id = produtoPesquisado.GetImagemId() });
+                        return true;
+                    }
                 }
             }
 
@@ -93,21 +127,47 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         public void Update(Produto produto)
         {
-            var produtoPesquisado = GetById(produto.Id);
+            var produtoPesquisado = GetById(produto.GetId());
 
             if (produtoPesquisado != null)
             {
-                produto.ImagemId = produtoPesquisado.ImagemId;
-                produto.ImagemProduto.Id = produtoPesquisado.ImagemId;
+                produto.SetImagemId(produtoPesquisado.GetImagemId());
+                produto.SetImagemProdutoId(produtoPesquisado.GetImagemId());
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
-                    connection.Execute(sql, produto);
 
-                    sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_IMAGEM);
-                    connection.Execute(sql, produto.ImagemProduto);
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
+                            connection.Execute(
+                                sql, 
+                                new { Descricao = produto.GetDescricao(), PrecoUnitario = produto.GetPrecoUnitario(), Categoria = produto.CategoriaId }, 
+                                transaction
+                            );
+
+                            sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_IMAGEM);
+                            connection.Execute(
+                                sql, 
+                                new { Url = produto.Url_path, UrlBlobStorage = produto.Url_Blob_Storage, id = produto.GetImagemId() },
+                                transaction
+                            );
+
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw new Exception($"Erro ao realizar a atualizacao. {ex.Message}");
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+                    }
                 }
             }
         }
@@ -126,20 +186,12 @@ namespace GameStore.Infrastructure.Data.Repositories
         }
         private Produto CleanerImageContentData(Produto produto)
         {
-            var result = new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, produto.Categoria, produto.ImagemProduto);
+            var result = produto.CreateProductByObjectCopy();
 
-            if (produto.ImagemProduto != null)
+            if (produto.GetImagemProduto() != null)
             {
-                result.ImagemProduto = new ImagemProduto
-                {
-                    Id = produto.ImagemProduto.Id,
-                    Url = produto.ImagemProduto.Url,
-                    DataStream = produto.ImagemProduto.DataStream,
-                    Database64Content = produto.ImagemProduto.Database64Content
-                };
-
-                result.ImagemProduto.DataStream = null;
-                result.ImagemProduto.Database64Content = null;
+                result.SetImagemProduto(produto.GetImagemProduto().CreateImageByObjectCopy());
+                result.GetImagemProduto().CleanStreamData();
             }
 
             return result;
@@ -147,7 +199,7 @@ namespace GameStore.Infrastructure.Data.Repositories
         private void CompleteData(Produto produto)
         {
             if (produto != null)
-                produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
+                produto.SetImagemProduto(new ImagemProduto(produto.GetImagemId(), produto.GetUrl()));
         }
 
         private void SetConnectionConfig()

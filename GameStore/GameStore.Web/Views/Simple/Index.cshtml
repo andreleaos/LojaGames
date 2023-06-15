@@ -9,24 +9,24 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
+            @Html.DisplayNameFor(model => model.GetDescricao())
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
+            @Html.DisplayFor(model => model.GetDescricao())
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecoUnitario)
+            @Html.DisplayNameFor(model => model.GetPrecoUnitario())
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecoUnitario)
+            @Html.DisplayFor(model => model.GetPrecoUnitario())
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
+            @Html.DisplayNameFor(model => model.GetCategoria())
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
+            @Html.DisplayFor(model => model.GetCategoria())
         </dd>
-        <img src="data:image/png;base64,@Model.ImagemProduto.Database64Content" alt="Imagem" class="imagem-produto" />
+        <img src="data:image/png;base64,@Model.GetImagemProduto().Database64Content" alt="Imagem" class="imagem-produto" />
     </dl>
 </div>
 <div>

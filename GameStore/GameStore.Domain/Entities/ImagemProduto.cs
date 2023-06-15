@@ -29,6 +29,14 @@ namespace GameStore.Domain.Entities
             Database64Content = GetDatabase64(DataStream);
         }
 
+        public ImagemProduto(int id, string url, byte[] dataStream, string database64)
+        {
+            this.Id = id;
+            this.Url = url;
+            DataStream = dataStream;
+            Database64Content = database64;
+        }
+
         private byte[] GetDataStream(string url)
         {
             byte[] dataStream = null;
@@ -57,6 +65,18 @@ namespace GameStore.Domain.Entities
 
             // TODO: ver algoritmo para reducao de texto
             return base64;
+        }
+
+        public void CleanStreamData()
+        {
+            DataStream = null;
+            Database64Content = null;
+        }
+
+        public ImagemProduto CreateImageByObjectCopy()
+        {
+            var result = new ImagemProduto(this.Id, this.Url, this.DataStream, this.Database64Content);
+            return result;
         }
     }
 }

@@ -87,8 +87,8 @@ namespace GameStore.Service.Api
         {
             Produto produto = produtoDto.ConvertToEntity();
             ProdutoDto result = produtoDto;
-            result.ImagemProduto = produto.ImagemProduto;
-            result.CategoriaProduto = produto.Categoria;
+            result.ImagemProduto = produto.GetImagemProduto();
+            result.CategoriaProduto = produto.GetCategoria();
             result.UrlBlobStorage = produto.Url_path;
             result.ImagemProduto.UrlBlobStorage = produto.Url_path;
             return result;
