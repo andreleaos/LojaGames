@@ -57,7 +57,7 @@ namespace GameStore.Domain.Entities
         public void SetCategoria(CategoriaProduto categoria) { this.Categoria = categoria; }
         public ImagemProduto GetImagemProduto() { return ImagemProduto; }
         public void SetImagemProduto(ImagemProduto imagemProduto) { this.ImagemProduto = imagemProduto; }
-        public void SetImagemProdutoId(int imagemId) { this.ImagemProduto.Id = imagemId; }
+        public void SetImagemProdutoId(int imagemId) { this.ImagemProduto.SetId(imagemId); }
         public int GetImagemId() { return this.ImagemId; }
         public void SetImagemId(int imagemId) { this.ImagemId = imagemId; }
         public string GetUrl() { return this.Url; }
@@ -89,14 +89,14 @@ namespace GameStore.Domain.Entities
         {
             get
             {
-                return ImagemProduto.Url;
+                return ImagemProduto.GetUrl();
             }
         }
         public string Url_Blob_Storage
         {
             get
             {
-                return ImagemProduto.UrlBlobStorage;
+                return ImagemProduto.GetUrlBlobStorage();
             }
         }
 
@@ -119,8 +119,9 @@ namespace GameStore.Domain.Entities
                 Categoria = this.Categoria.ToString(),
                 CategoriaProduto = this.Categoria,
                 ImagemProduto = this.ImagemProduto,
-                UrlImagem = this.ImagemProduto.Url,
-                UrlBlobStorage = this.UrlBlobStorage
+                UrlImagem = this.ImagemProduto.GetUrl(),
+                UrlBlobStorage = this.GetUrlBlobStorage(),
+                Database64Content = this.ImagemProduto.GetDatabase64Content()
             };
         }
         public static ProdutoDto ConvertToDto(Produto produto)
@@ -140,8 +141,10 @@ namespace GameStore.Domain.Entities
             if (produto.ImagemProduto != null)
             {
                 result.ImagemProduto = produto.ImagemProduto;
-                result.UrlImagem = produto.ImagemProduto.Url;
-                result.UrlBlobStorage = produto.UrlBlobStorage;
+                result.UrlImagem = produto.ImagemProduto.GetUrl();
+                result.UrlBlobStorage = produto.GetUrlBlobStorage();
+                result.Database64Content = produto.ImagemProduto.GetDatabase64Content();
+
             }
 
             return result;    

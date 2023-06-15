@@ -27,6 +27,7 @@ namespace GameStore.Domain.Dtos
                 return $"R$ {precoFormat}";
             }
         }
+        public string Database64Content { get; set; }
 
         public Produto ConvertToEntity()
         {

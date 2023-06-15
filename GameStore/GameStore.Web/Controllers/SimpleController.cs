@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Entities;
+﻿using GameStore.Domain.Dtos;
+using GameStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
@@ -24,7 +25,7 @@ namespace GameStore.Web.Controllers
                 HttpResponseMessage response = await _httpClient.GetAsync(_url_base_address);
 
                 var content = response.Content.ReadAsStringAsync().Result;
-                var result = JsonConvert.DeserializeObject<Produto>(content);
+                var result = JsonConvert.DeserializeObject<ProdutoDto>(content);
                 return View(result);
             }
             catch (Exception ex)

@@ -42,7 +42,8 @@ namespace GameStore.Api.Controllers
         [Route("{id}")]
         public ProdutoDto? GetById(int id)
         {
-            return _produtoService.GetById(id);
+            var produto = _produtoService.GetById(id);
+            return produto;
         }
 
         [HttpPut]

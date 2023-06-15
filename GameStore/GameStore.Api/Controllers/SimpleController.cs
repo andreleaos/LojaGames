@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Entities;
+﻿using GameStore.Domain.Dtos;
+using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace GameStore.Api.Controllers
         {
             try
             {
-                Produto produto = GetProductExample();
+                ProdutoDto produto = GetProductExample();
                 return Ok(produto);
             }
             catch (Exception ex)
@@ -23,15 +24,14 @@ namespace GameStore.Api.Controllers
             }
         }
 
-        private Produto GetProductExample()
+        private ProdutoDto GetProductExample()
         {
             string url = @"C:\Repo\LojaGames\GameStore\GameStore.Infrastructure\Images\Fifa23.png";
 
             ImagemProduto imagem = new ImagemProduto(1, url);
-
             Produto produto = new Produto(1, "Fifa 23 PS4", 79.90, CategoriaProduto.Game, imagem);
-
-            return produto;
+            var result = produto.ConvertToDto();
+            return result;
         }
     }
 }

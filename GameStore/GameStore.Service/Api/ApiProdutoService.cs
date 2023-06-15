@@ -90,7 +90,7 @@ namespace GameStore.Service.Api
             result.ImagemProduto = produto.GetImagemProduto();
             result.CategoriaProduto = produto.GetCategoria();
             result.UrlBlobStorage = produto.Url_path;
-            result.ImagemProduto.UrlBlobStorage = produto.Url_path;
+            result.ImagemProduto.SetUrlBlobStorage(produto.Url_path);
             return result;
         }
 
