@@ -13,10 +13,12 @@ namespace GameStore.Domain.Enums
         CADASTRAR_PRODUTO,
         ATUALIZAR_PRODUTO,
         EXCLUIR_PRODUTO,
-
         CADASTRAR_IMAGEM,
         ATUALIZAR_IMAGEM,
         PESQUISAR_IMAGEM_PELA_URL,
-        EXCLUIR_IMAGEM
+        EXCLUIR_IMAGEM,
+        SEED_CATEGORIA,
+        SEED_IMAGEM_PRODUTO,
+        SEED_PRODUTO,
     }
 }

@@ -1,47 +1,115 @@
 ﻿@model IEnumerable<GameStore.Domain.Dtos.ProdutoDto>
-
 @{
     ViewData["Title"] = "Produtos";
 }
+
+<head>
+    <style type="text/css">
+/*        .carousel {
+            background: lightgray;
+        }*/
+
+        #gameCarousel {
+            /*margin-top: 70px;*/
+            min-height: 500px;
+            min-width: 100%;
+            background: lightgray;
+        }
+
+        #gameCarousel img {
+            margin-top: 50px;
+            /*max-height: 18%;*/
+            max-width: 25%;
+        }
+
+        #gameCarousel > .carousel-indicators > li {
+            border-radius: 0px;
+            min-width: 25px;
+            background-color: #9d9d9d;
+            border: 1px solid black;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        #gameCarousel > .carousel-indicators > .active {
+            background-color: orange;
+        }
+
+        #gameCarousel .carousel-caption {
+            color: black;
+            right: 65%;
+            text-align: center;
+            max-width: 500px;
+            left: auto;
+            /*top: auto;*/
+            top: 50%;
+            transform: translateY(-50%);
+            bottom: initial;
+        }
+    </style>
+
+</head>
 
 <h3>Gestão de Produtos</h3>
 
 <p>
     <a asp-action="Create">Adicionar Novo</a>
 </p>
-<table class="table" class="grid-container">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecoUnitario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.PrecoCurrencyFormat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new {  id = item.Id }) |
-                @Html.ActionLink("Detalhes", "Details", new {  id = item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <section style="position: relative">
+        <div class="banner">
+            <div class="">
+                <div id="gameCarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @for (var i = 0; i < Model.Count(); i++)
+                        {
+                            <li data-target="#gameCarousel" data-slide-to="@i" class="@((i == 0) ? "active" : "")"></li>
+                        }
+                    </ol>
+                    <div class="carousel-inner">
+                        @{
+                            int contador = 0;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <div class="carousel-item @(contador == 0 ? "active" : "")">
+                                <img src="@item.UrlBlobStorage" class="mx-auto d-block w-30" alt="@item.Descricao">
+                                <div class="carousel-caption d-none d-md-block ">
+                                    <h5>@item.Descricao</h5>
+                                    <p>@item.Categoria</p>
+                                    <p>Preço: R$ @item.PrecoUnitario</p>
+
+                                    <div class="row">
+                                        <p>
+                                            @Html.ActionLink("Editar", "Edit", new {  id = item.Id }, new { @class = "btn btn-primary"})
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <p>
+                                            @Html.ActionLink("Detalhes", "Details", new {  id = item.Id }, new { @class = "btn btn-primary"})
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <p>
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary"})
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            contador++;
+                        }
+                    </div>
+                    <a class="carousel-control-prev" href="#gameCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#gameCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Próximo</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

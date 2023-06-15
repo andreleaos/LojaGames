@@ -33,7 +33,7 @@ namespace GameStore.Api.Controllers
             {
                 Id = 1,
                 Descricao = "Fifa 23 PS4",
-                PrecoUnitario = 79.90,
+                PrecoUnitario = 79.90m,
                 Categoria = CategoriaProduto.Game,
                 ImagemProduto = imagem
             };

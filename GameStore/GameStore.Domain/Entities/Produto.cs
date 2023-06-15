@@ -12,7 +12,7 @@ namespace GameStore.Domain.Entities
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public double PrecoUnitario { get; set; }
+        public decimal PrecoUnitario { get; set; }
         public CategoriaProduto Categoria { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
 
@@ -62,7 +62,8 @@ namespace GameStore.Domain.Entities
                 Descricao = produto.Descricao,
                 PrecoUnitario = produto.PrecoUnitario,
                 Categoria = produto.Categoria.ToString(),
-                CategoriaProduto = produto.Categoria
+                CategoriaProduto = produto.Categoria,
+                UrlBlobStorage = produto.UrlBlobStorage
             };
 
             if (produto.ImagemProduto != null)

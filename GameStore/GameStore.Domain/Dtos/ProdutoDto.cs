@@ -14,7 +14,7 @@ namespace GameStore.Domain.Dtos
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public double PrecoUnitario { get; set; }
+        public decimal PrecoUnitario { get; set; }
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
         public string UrlImagem { get; set; }

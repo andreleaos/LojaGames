@@ -1,34 +1,48 @@
 ﻿using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
-using GameStore.Domain.Utils;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Domain.Dtos
 {
     public class ProdutoFormDto
     {
+        [Display(Name = "ID")]
         public int Id { get; set; }
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
-        public double PrecoUnitario { get; set; }
-        public string Categoria { get; set; }
-        public CategoriaProduto CategoriaProduto { get; set; }
-        public string UrlImagem { get; set; }
-        public string UrlBlobStorage { get; set; }
-        public ImagemProduto ImagemProduto { get; set; }
-        public string PrecoCurrencyFormat
+
+        
+        private decimal precoUnitario;
+        public decimal PrecoUnitario { get; set; }
+
+        private string precoUnitarioStr;
+
+        [Display(Name = "Preço Unitário")]
+        public string PrecoUnitarioStr
         {
-            get
-            {
-                string precoFormat = Math.Round(PrecoUnitario, 2).ToString();
-                return $"R$ {precoFormat}";
+            get { return precoUnitarioStr; }
+            set 
+            { 
+                precoUnitarioStr = value;
+                Decimal.TryParse(precoUnitarioStr, out precoUnitario);
+                PrecoUnitario = precoUnitario;
             }
         }
 
-        public IFormFile Arquivo { get; set; }
+
+        [Display(Name = "Categoria")]
+        public string Categoria { get; set; }
+        public CategoriaProduto CategoriaProduto { get; set; }
+
+        [Display(Name = "URL Blog Storage")]
+        public string UrlImagem { get; set; }
+
+        public string UrlBlobStorage { get; set; }
+        public ImagemProduto ImagemProduto { get; set; }
+
+
+        [Display(Name = "Arquivo")]
+        public IFormFile? Arquivo { get; set; }
     }
 }
