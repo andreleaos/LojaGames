@@ -1,7 +1,7 @@
 ﻿using GameStore.Domain.ConfigApp;
 using GameStore.Infrastructure.Config;
 using GameStore.Infrastructure.Data.Repositories;
-using GameStore.Service.Api;
+using GameStore.Service.Client;
 using GameStore.Service.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +30,7 @@ namespace GameStore.IoC.Configuration
         private static void AddServicesDependencies(IServiceCollection services)
         {
             services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<IApiProdutoService, ApiProdutoService>();
+            services.AddScoped<IProdutoClientService, ProdutoClientService>();
         }
 
         private static void ConfigureDatabase(IConfiguration configuration)

@@ -1,22 +1,22 @@
 ﻿using GameStore.Domain.Dtos;
 using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
-using GameStore.Service.Api;
+using GameStore.Service.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.Web.Controllers
 {
     public class ProdutoController : Controller
     {
-        private readonly IApiProdutoService _apiProdutoService;
-        public ProdutoController(IApiProdutoService apiProdutoService)
+        private readonly IProdutoClientService _client;
+        public ProdutoController(IProdutoClientService client)
         {
-            _apiProdutoService = apiProdutoService;
+            _client = client;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<ProdutoDto> produtos = await _apiProdutoService.GetAll();
+            List<ProdutoDto> produtos = await _client.GetAll();
             return View(produtos);
         }
         public IActionResult Create()
@@ -28,32 +28,32 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Create([Bind("Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
         {
             produto.ConfigurarPrecoProduto();
-            await _apiProdutoService.Create(produto);
+            await _client.Create(produto);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            ProdutoDto? produto = await _apiProdutoService.GetById(id);
+            ProdutoDto? produto = await _client.GetById(id);
             return View(produto);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            ProdutoDto? produto = await _apiProdutoService.GetById(id);
+            ProdutoDto? produto = await _client.GetById(id);
             return View(produto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
         {
-            await _apiProdutoService.Delete(produto.Id);
+            await _client.Delete(produto.Id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            ProdutoDto? produto = await _apiProdutoService.GetById(id);
+            ProdutoDto? produto = await _client.GetById(id);
             produto.ConfigurarPrecoProduto();
             return View(produto);
         }
@@ -62,7 +62,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit([Bind("Id, Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
         {
             produto.ConfigurarPrecoProduto();
-            await _apiProdutoService.Update(produto);
+            await _client.Update(produto);
             return RedirectToAction("Index");
         }
     }

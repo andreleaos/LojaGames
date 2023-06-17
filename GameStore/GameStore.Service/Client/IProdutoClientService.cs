@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Service.Api
+namespace GameStore.Service.Client
 {
-    public interface IApiProdutoService : IGenericApiService<ProdutoDto, int>
+    public interface IProdutoClientService : IGenericApiService<ProdutoDto, int>
     {
 
     }

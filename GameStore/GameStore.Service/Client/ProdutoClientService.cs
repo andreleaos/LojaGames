@@ -9,14 +9,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStore.Service.Api
+namespace GameStore.Service.Client
 {
-    public class ApiProdutoService : IApiProdutoService
+    public class ProdutoClientService : IProdutoClientService
     {
         private HttpClient _httpClient = null;
 
         private string _url_base_address = string.Empty;
-        public ApiProdutoService(IConfiguration configuration)
+        public ProdutoClientService(IConfiguration configuration)
         {
             _url_base_address = configuration["Endpoints:API_PRODUTOS"];
             _httpClient = new HttpClient();
