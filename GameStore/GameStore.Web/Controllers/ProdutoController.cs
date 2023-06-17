@@ -23,6 +23,11 @@ namespace GameStore.Web.Controllers
             List<ProdutoDto> produtos = await _client.GetAll();
             return View(produtos);
         }
+        public async Task<IActionResult> IndexLista()
+        {
+            List<ProdutoDto> produtos = await _apiProdutoService.GetAll();
+            return View(produtos);
+        }
         public IActionResult Create()
         {
             return View();
@@ -60,6 +65,7 @@ namespace GameStore.Web.Controllers
             ProdutoDto? produto = await _client.GetById(id);
             produto.ConfigurarPrecoProduto();
             ProdutoFormDto produtoFormDto = _mapper.Map<ProdutoFormDto>(produto);
+            produtoFormDto.PrecoUnitarioStr = produto.PrecoUnitario.ToString("N2");
             return View(produtoFormDto);
         }
 

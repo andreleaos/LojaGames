@@ -35,3 +35,5 @@ GameStore/GameStore.Service/obj/*
 /GameStore/GameStore.Web/Properties/ServiceDependencies/GameStoresTech - Web Deploy/profile.arm.json
 /GameStore/GameStore.Web/GameStore.Web.csproj.user
 /GameStore/GameStore.Web/GameStore.Web.csproj.user
+/GameStore/GameStore.Web/Views/Shared/_Layout - Copy.cshtml
+/GameStore/GameStore.Web/Views/Shared/_Layout - Copy.cshtml.css

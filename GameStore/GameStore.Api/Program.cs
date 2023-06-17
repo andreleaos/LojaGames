@@ -1,4 +1,6 @@
+using GameStore.Infrastructure.Data.Repositories;
 using GameStore.IoC.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameStore.Api
 {
@@ -25,6 +27,33 @@ namespace GameStore.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+                string momentoCriacao = string.Empty;
+                try
+                {
+                    var produtoRepository = scopedProvider.GetRequiredService<IProdutoRepository>();
+
+                    momentoCriacao = "tabela categoria.";
+                    app.Logger.LogInformation("criando a " + momentoCriacao);
+                    var seedImplemented = produtoRepository.SeedAsync("categoria");
+
+                    momentoCriacao = "tabela imagemProduto.";
+                    app.Logger.LogInformation("criando a " + momentoCriacao);
+                    seedImplemented = produtoRepository.SeedAsync("imagemProduto");
+
+                    momentoCriacao = "tabela produto.";
+                    app.Logger.LogInformation("criando a " + momentoCriacao);
+                    seedImplemented = produtoRepository.SeedAsync("produto");
+                }
+                catch (Exception ex)
+                {
+                    app.Logger.LogError(ex, "Ocorreu um erro para criar a " + momentoCriacao);
+                }
+            }
+
 
             app.UseHttpsRedirection();
 

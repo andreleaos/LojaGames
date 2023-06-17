@@ -14,8 +14,7 @@ namespace GameStore.Domain.Dtos
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public string Preco { get; set; }
-        public double PrecoUnitario { get; set; }
+        public decimal PrecoUnitario { get; set; }
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
         public string UrlImagem { get; set; }
@@ -59,6 +58,8 @@ namespace GameStore.Domain.Dtos
         {
             CategoriaProduto categoriaProduto = ConversorEnums.ConvertToEnum(produto.Categoria);
             ImagemProduto imagemProduto = new ImagemProduto(produto.UrlImagem);
+
+            //                 UrlBlobStorage = produto.UrlBlobStorage
 
             return new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, categoriaProduto, imagemProduto);
         }
