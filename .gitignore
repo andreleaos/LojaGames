@@ -20,3 +20,18 @@ GameStore/GameStore.Service/obj
 
 GameStore/GameStore.Service/bin/*
 GameStore/GameStore.Service/obj/*
+/.vs
+/Azure/Scripts
+/GameStore/GameStore.Api/.config/dotnet-tools.json
+/GameStore/GameStore.Api/Properties/PublishProfiles/GameStoresTechApi - Web Deploy.pubxml
+/GameStore/GameStore.Api/Properties/PublishProfiles/GameStoresTechApi - Web Deploy.pubxml.user
+/GameStore/GameStore.Api/Properties/ServiceDependencies/GameStoresTech - Web Deploy/profile.arm.json
+/GameStore/GameStore.Api/Properties/ServiceDependencies/GameStoresTechApi - Web Deploy/profile.arm.json
+/GameStore/GameStore.Api/GameStore.Api.csproj.user
+/GameStore/GameStore.Infrastructure/Scripts/ScripsDB.sql
+/GameStore/GameStore.Web/.config/dotnet-tools.json
+/GameStore/GameStore.Web/Properties/PublishProfiles/GameStoresTech - Web Deploy.pubxml
+*.user
+/GameStore/GameStore.Web/Properties/ServiceDependencies/GameStoresTech - Web Deploy/profile.arm.json
+/GameStore/GameStore.Web/GameStore.Web.csproj.user
+/GameStore/GameStore.Web/GameStore.Web.csproj.user

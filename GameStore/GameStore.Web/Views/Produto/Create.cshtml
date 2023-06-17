@@ -1,4 +1,4 @@
-﻿@model GameStore.Domain.Dtos.ProdutoDto
+﻿@model GameStore.Domain.Dtos.ProdutoFormDto
 
 @{
     ViewData["Title"] = "Create";
@@ -10,33 +10,34 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" class="form-container">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" class="form-control" />
-                <span asp-validation-for="Preco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="UrlImagem" class="control-label"></label>
-                <input asp-for="UrlImagem" class="form-control" />
-                <span asp-validation-for="UrlImagem" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
+        <section>
+            <form asp-controller="Produto" asp-action="Create" method="post" class="form-container" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Descricao" class="control-label"></label>
+                    <input asp-for="Descricao" class="form-control" />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrecoUnitario" class="control-label"></label>
+                    <input asp-for="PrecoUnitario" class="form-control" />
+                    <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Categoria" class="control-label"></label>
+                    <input asp-for="Categoria" class="form-control" />
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Arquivo" class="control-label"></label>
+                    <input asp-for="Arquivo" type="file" class="form-control" />
+                    <span asp-validation-for="Arquivo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            </form>
+        </section>
     </div>
 </div>
 

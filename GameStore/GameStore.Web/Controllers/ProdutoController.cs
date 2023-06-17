@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Dtos;
+﻿using AutoMapper;
+using GameStore.Domain.Dtos;
 using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using GameStore.Service.Client;
@@ -9,9 +10,12 @@ namespace GameStore.Web.Controllers
     public class ProdutoController : Controller
     {
         private readonly IProdutoClientService _client;
-        public ProdutoController(IProdutoClientService client)
+        private IMapper _mapper;
+
+        public ProdutoController(IProdutoClientService client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -25,7 +29,7 @@ namespace GameStore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Create(ProdutoFormDto produtoForm)
         {
             produto.ConfigurarPrecoProduto();
             await _client.Create(produto);
@@ -54,15 +58,16 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ProdutoDto? produto = await _client.GetById(id);
-            produto.ConfigurarPrecoProduto();
+            produto.ConfigurarPrecoProduto();1
+            ProdutoFormDto produto = _mapper.Map<ProdutoFormDto>(produtoDto);
             return View(produto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id, Descricao, Preco, Categoria, UrlImagem")] ProdutoDto produto)
+        public async Task<IActionResult> Edit(ProdutoFormDto produtoForm)
         {
-            produto.ConfigurarPrecoProduto();
-            await _client.Update(produto);
+            produtoForm.ConfigurarPrecoProduto();
+            await _client.Update(produtoForm);
             return RedirectToAction("Index");
         }
     }

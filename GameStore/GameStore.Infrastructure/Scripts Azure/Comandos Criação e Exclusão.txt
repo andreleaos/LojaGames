@@ -1,0 +1,61 @@
+# efetuando o login
+az login
+
+#Definindo a subscription
+az account set --subscription 1fb41156-2ec9-455e-b554-4d344b87759f
+
+#deletetando um resorce group
+az group delete --name rg-GameStoresTech
+
+# criando um resorce group
+az group create --name rg-GameStoresTech --location brazilsouth
+
+#criando um service plan em um resource group
+az appservice plan create --name asp-GameStoresTech --resource-group rg-GameStoresTech --sku FREE
+
+#criando uma web app
+az webapp create --name GameStoresTech --plan asp-GameStoresTech --resource-group rg-GameStoresTech --runtime dotnet:6
+
+#criando uma web app - para a API
+az webapp create --name GameStoresTechApi --plan asp-GameStoresTech --resource-group rg-GameStoresTech --runtime dotnet:6
+
+
+#criando um storage account
+az storage account create --name gamestorestech --resource-group rg-GameStoresTech --location brazilsouth --sku Standard_LRS 
+
+#criando um container blob
+az storage container create --account-name gamestorestech --name images --public-access blob
+
+#configurando chaves e valores no appsettings do webapp
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings ASPNETCORE_ENVIRONMENT="Development"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings API_PRODUTOS="https://gamestorestechapi.azurewebsites.net/api/produto"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings API_SIMPLES="https://gamestorestechapi.azurewebsites.net/api/simple"
+
+
+#obtendo a connection string do blob storage
+az storage account show-connection-string --resource-group rg-GameStoresTech --name gamestorestech
+
+#configurando chaves e valores no appsettings do webapp -API
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ConnectionStorageAccount="DefaultEndpointsProtocol=https;AccountName=gamestorestech;AccountKey=zFhyx89yI9c7hg8OgadasfhsdfhzJDjTe7W3w/9cEpS1EaGmjw7E9AfWt+VasRpvjZHkYclKXXzEeKI7BVcVZ+AStWIGOlQ==;EndpointSuffix=core.windows.net"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ContainerBlobStorage="images"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ASPNETCORE_ENVIRONMENT="Development"
+
+
+#criando um Server
+az sql server create --name gamestorestech --resource-group rg-GameStoresTech --location brazilsouth --admin-user nomeDeSeuUser --admin-password SuaSenh@
+
+#criando SQL DataBase
+az sql db create --resource-group rg-GameStoresTech --server gamestorestech --name LojaGamesDB --backup-storage-redundancy Local --sample-name AdventureWorksLT --edition GeneralPurpose --compute-model Serverless --family Gen5 --capacity 2
+
+#liberando acesso do ip para ao BD para acesso local
+az sql server firewall-rule create --resource-group rg-GameStoresTech --server gamestorestech -n PermissaoFaixaIpFernando --start-ip-address 187.56.221.0 --end-ip-address 187.56.221.255
+
+#liberando acesso do ip para ao BD para acesso da API
+az sql server firewall-rule create --resource-group rg-GameStoresTech --server gamestorestech -n PermissaoFaixaIpApi --start-ip-address 20.206.176.6 --end-ip-address 20.206.176.6
+
+#obtendo a connection string sql server
+az sql db show-connection-string --server gamestorestech --name LojaGamesDB --client ado.net
+
+#configurando connection string no webapp - API
+az webapp config connection-string set --resource-group rg-GameStoresTech --name GameStoresTechApi --connection-string-type SQLServer --settings lojaGamesDB='Server=tcp:gamestorestech.database.windows.net,1433;Initial Catalog=LojaGamesDB;Persist Security Info=False;User ID=nomeDeSeuUser;Password=SuaSenh@;MultipleActiveResultSets=False;Encrypt=true;TrustServerCertificate=False;Connection Timeout=30;'
+

@@ -16,12 +16,12 @@ namespace GameStore.Infrastructure.Data.Repositories
             switch (sqlQuery)
             {
                 case TSqlQuery.LISTAR_PRODUTO:
-                    sql = "select p.id, p.descricao, precoUnitario, categoriaId, c.descricao 'categoria', imagemId 'ImagemId', url_path 'Url' " +
+                    sql = "select p.id, p.descricao, precoUnitario, categoriaId, c.descricao 'categoria', imagemId 'ImagemId', url_blob_storage 'Url' " +
                           "from produto p inner join imagemProduto ip on p.imagemId = ip.id inner join categoria c on p.categoriaId = c.id";
                     break;
 
                 case TSqlQuery.PESQUISAR_PRODUTO:
-                    sql = "select p.id, p.descricao, precoUnitario, categoriaId, c.descricao 'categoria', imagemId 'ImagemId', url_path 'Url' " +
+                    sql = "select p.id, p.descricao, precoUnitario, categoriaId, c.descricao 'categoria', imagemId 'ImagemId', url_blob_storage 'Url' " +
                           "from produto p inner join imagemProduto ip on p.imagemId = ip.id inner join categoria c on p.categoriaId = c.id where p.id = @id";
                     break;
 
@@ -41,16 +41,20 @@ namespace GameStore.Infrastructure.Data.Repositories
                     sql = "delete from produto where id = @id";
                     break;
 
+                case TSqlQuery.EXCLUIR_IMAGEM:
+                    sql = "delete from imagemProduto where id = @id";
+                    break;
+
                 case TSqlQuery.CADASTRAR_IMAGEM:
                     sql = "insert into imagemProduto (url_path) values (@Url_path); SELECT SCOPE_IDENTITY();";
                     break;
 
                 case TSqlQuery.ATUALIZAR_IMAGEM:
-                    sql = "update imagemProduto set url_path = @Url where id = @id";
+                    sql = "update imagemProduto set url_blob_storage = @UrlBlobStorage where id = @id";
                     break;
 
                 case TSqlQuery.PESQUISAR_IMAGEM_PELA_URL:
-                    sql = "select id 'Id', url_path 'Url' from imagemProduto where url_path = @Url_path";
+                    sql = "select id 'Id', url_blob_storage 'Url' from imagemProduto where url_blob_storage = @Url_Blob_Storage";
                     break;
             }
 

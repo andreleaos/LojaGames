@@ -1,4 +1,5 @@
-﻿using GameStore.Domain.Dtos;
+﻿using AutoMapper;
+using GameStore.Domain.Dtos;
 using GameStore.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +18,22 @@ namespace GameStore.Service.Client
         private HttpClient _httpClient = null;
 
         private string _url_base_address = string.Empty;
-        public ProdutoClientService(IConfiguration configuration)
+        private IMapper _mapper;
+
+        public ProdutoClientService(IConfiguration configuration, IMapper mapper)
         {
-            _url_base_address = configuration["Endpoints:API_PRODUTOS"];
+            _url_base_address = configuration.GetSection("API_PRODUTOS").Value;
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
+            _mapper = mapper;
         }
 
-        public async Task Create(ProdutoDto produto)
+        public async Task Create(ProdutoFormDto produtoFormDto)
         {
+            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
+
+            produto.AtualizarImagemProdutoBase64();
+
             var produtoDto = CompletedProductData(produto);
 
             string endpoint = $"{_url_base_address}";
@@ -66,8 +75,12 @@ namespace GameStore.Service.Client
             var result = JsonConvert.DeserializeObject<ProdutoDto>(content);
             return result;
         }
-        public async Task Update(ProdutoDto produto)
+        public async Task Update(ProdutoFormDto produtoFormDto)
         {
+            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
+
+            produto.AtualizarImagemProdutoBase64();
+
             var produtoDto = CompletedProductData(produto);
 
             string endpoint = $"{_url_base_address}";
@@ -106,6 +119,39 @@ namespace GameStore.Service.Client
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             HttpContent content = byteContent;
             return content;
+        }
+
+        public ProdutoDto RealizarMapperParaProdutoDto(ProdutoFormDto produtoForm)
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Arquivos/Recebidos");
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            FileInfo fileInfo = new FileInfo(produtoForm.Arquivo.FileName);
+            string fileName = produtoForm.Arquivo.FileName;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                produtoForm.Arquivo.CopyTo(stream);
+            }
+
+            produtoForm.UrlImagem = fileNameWithPath;
+
+            ProdutoDto produtoDto = _mapper.Map<ProdutoDto>(produtoForm);
+            return produtoDto;
+        }
+
+        public Task Create(ProdutoDto entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(ProdutoDto entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
