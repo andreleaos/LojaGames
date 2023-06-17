@@ -1,0 +1,58 @@
+﻿@model IEnumerable<GameStore.Domain.Dtos.ProdutoDto>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<head>
+    <style type="text/css">
+        #container{
+            margin-top: 45px !important;
+        }
+    </style>
+
+</head>
+
+<h3>Gestão de Produtos</h3>
+
+<div class="container">
+    <p>
+        <a asp-action="Create">Adicionar Novo</a>
+    </p>
+    <table class="table" class="grid-container">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrecoUnitario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.PrecoCurrencyFormat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new {  id = item.Id }) |
+                    @Html.ActionLink("Detalhes", "Details", new {  id = item.Id  }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

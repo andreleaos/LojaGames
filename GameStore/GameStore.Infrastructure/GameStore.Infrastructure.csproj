@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="sql\DDL\Create Table - 01 - categoria.sql" />
+    <None Remove="sql\DDL\Create Table - 02 - imagemProduto.sql" />
+    <None Remove="sql\DDL\Create Table - 03 - produto.sql" />
+    <None Remove="sql\DML\Insert categoria.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="sql\DDL\Create Table - 01 - categoria.sql" />
+    <EmbeddedResource Include="sql\DDL\Create Table - 02 - imagemProduto.sql" />
+    <EmbeddedResource Include="sql\DDL\Create Table - 03 - produto.sql" />
+    <EmbeddedResource Include="sql\DML\Insert categoria.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -15,6 +29,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameStore.Domain\GameStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="sql\Functions\" />
   </ItemGroup>
 
 </Project>

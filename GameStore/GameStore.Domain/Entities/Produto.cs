@@ -135,7 +135,8 @@ namespace GameStore.Domain.Entities
                 Descricao = produto.Descricao,
                 PrecoUnitario = produto.PrecoUnitario,
                 Categoria = produto.Categoria.ToString(),
-                CategoriaProduto = produto.Categoria
+                CategoriaProduto = produto.Categoria,
+                UrlBlobStorage = produto.UrlBlobStorage
             };
 
             if (produto.ImagemProduto != null)

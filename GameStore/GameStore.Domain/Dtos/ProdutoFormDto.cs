@@ -1,48 +1,61 @@
 ﻿using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
-using GameStore.Domain.Utils;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Domain.Dtos
 {
     public class ProdutoFormDto
     {
+        [Display(Name = "ID")]
         public int Id { get; set; }
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
-        public string Preco { get; set; }
+
+        
+        private double precoUnitario;
         public double PrecoUnitario { get; set; }
+
+        private string precoUnitarioStr;
+
+        [Display(Name = "Preço Unitário")]
+        public string PrecoUnitarioStr
+        {
+            get { return precoUnitarioStr; }
+            set 
+            { 
+                precoUnitarioStr = value;
+                Double.TryParse(precoUnitarioStr, out precoUnitario);
+                PrecoUnitario = precoUnitario;
+            }
+        }
+
+
+        [Display(Name = "Categoria")]
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
+
+        [Display(Name = "URL Blog Storage")]
         public string UrlImagem { get; set; }
+
         public string UrlBlobStorage { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
-        public string PrecoCurrencyFormat
-        {
-            get
-            {
-                string precoFormat = Math.Round(PrecoUnitario, 2).ToString();
-                return $"R$ {precoFormat}";
-            }
-        }
 
-        public IFormFile Arquivo { get; set; }
 
-        public void ConfigurarPrecoProduto()
-        {
-            if (!string.IsNullOrEmpty(this.Preco))
-            {
-                this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
-            }
+        [Display(Name = "Arquivo")]
+        public IFormFile? Arquivo { get; set; }
 
-            if (this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
-            {
-                this.Preco = this.PrecoUnitario.ToString();
-            }
-        }
+        //public void ConfigurarPrecoProduto()
+        //{
+        //    if (!string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
+        //    }
+
+        //    if (this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.Preco = this.PrecoUnitario.ToString();
+        //    }
+        //}
     }
 }

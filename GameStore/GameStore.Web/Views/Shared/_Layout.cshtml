@@ -1,61 +1,85 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GameStore.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GameStore.Web.styles.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>>@ViewData["Title"] - GameStore.Web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+            font-family: Arial, sans-serif;
+        }
 
-    <!-- Material-UI Design -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-ui/core@4.11.2/dist/umd/material-ui.min.css" integrity="sha384-/5+o9vnEY0qic6kYdD4MCvAt1aPWx3uNDh8OKeYFYh5T+oqbl74wPQHsLnSDb8eF" crossorigin="anonymous" />
+        .navbar {
+            background-color: #333;
+        }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+        
+        .nav-link-dark {
+            color: black;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            padding: 20px 0;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameStore.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Simple" asp-action="Index">Simple Product</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameStore.Web</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Página Inicial</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestão de Produtos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link-dark" asp-area="" asp-controller="Produto" asp-action="Index">Carrossel de Produtos</a>
+                        <a class="nav-link-dark" asp-area="" asp-controller="Produto" asp-action="IndexLista">Lista de Produtos</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Carrinho</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contato</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer>
         <div class="container">
-            &copy; 2023 - GameStore.Web - andreleaos
+            &copy; 2023 - GameStore.Web. Todos os direitos reservados.
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js" integrity="sha384-oq8RyS6j0HPOEp5szXQjAjb6wzAbiCIFEzDHw+e2Tz+VQyUev1ziWqgVn3b9lQo8" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js" integrity="sha384-iYy8/QYFLCk3U0nt2jUGpZppYKexzX5p2QhOpFuZi/dG2tK5X2MA62+vHpC+mwno" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/material-ui/core@4.11.2/dist/umd/material-ui.production.min.js" integrity="sha384-V/d/6AZOAR/43AFdOZxSKYz1eN5IQI+R/lcQSNBrUj6yCxSaz2HTvmpV6Q7Oo09G" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

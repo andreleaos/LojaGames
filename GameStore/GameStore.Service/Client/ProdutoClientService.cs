@@ -128,17 +128,20 @@ namespace GameStore.Service.Client
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            FileInfo fileInfo = new FileInfo(produtoForm.Arquivo.FileName);
-            string fileName = produtoForm.Arquivo.FileName;
-
-            string fileNameWithPath = Path.Combine(path, fileName);
-
-            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            if(produtoForm.Arquivo != null)
             {
-                produtoForm.Arquivo.CopyTo(stream);
-            }
+                FileInfo fileInfo = new FileInfo(produtoForm.Arquivo.FileName);
+                string fileName = produtoForm.Arquivo.FileName;
 
-            produtoForm.UrlImagem = fileNameWithPath;
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    produtoForm.Arquivo.CopyTo(stream);
+                }
+
+                produtoForm.UrlImagem = fileNameWithPath;
+            }
 
             ProdutoDto produtoDto = _mapper.Map<ProdutoDto>(produtoForm);
             return produtoDto;
