@@ -14,7 +14,7 @@ namespace GameStore.Domain.Dtos
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public decimal PrecoUnitario { get; set; }
+        public double PrecoUnitario { get; set; }
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
         public string UrlImagem { get; set; }
@@ -41,18 +41,18 @@ namespace GameStore.Domain.Dtos
             return new Produto(this.Id, this.Descricao, this.PrecoUnitario, CategoriaProduto, this.ImagemProduto);
         }
 
-        public void ConfigurarPrecoProduto()
-        {
-            if (!string.IsNullOrEmpty(this.Preco))
-            {
-                this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
-            }
+        //public void ConfigurarPrecoProduto()
+        //{
+        //    if (!string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
+        //    }
 
-            if(this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
-            {
-                this.Preco = this.PrecoUnitario.ToString();
-            }
-        }
+        //    if(this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.Preco = this.PrecoUnitario.ToString();
+        //    }
+        //}
 
         public static Produto ConvertToEntity(ProdutoDto produto)
         {

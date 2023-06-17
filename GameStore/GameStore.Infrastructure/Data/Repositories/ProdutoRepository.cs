@@ -199,7 +199,7 @@ namespace GameStore.Infrastructure.Data.Repositories
         private void CompleteData(Produto produto)
         {
             if (produto != null)
-                produto.ImagemProduto = new ImagemProduto(produto.ImagemId, produto.Url);
+                produto.SetImagemProduto(new ImagemProduto(produto.GetImagemId(), produto.GetUrl()));
         }
 
         public async Task<bool> SeedAsync(string nomeTabela, int retry = 0)

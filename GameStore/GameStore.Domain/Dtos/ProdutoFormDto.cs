@@ -13,8 +13,8 @@ namespace GameStore.Domain.Dtos
         public string Descricao { get; set; }
 
         
-        private decimal precoUnitario;
-        public decimal PrecoUnitario { get; set; }
+        private double precoUnitario;
+        public double PrecoUnitario { get; set; }
 
         private string precoUnitarioStr;
 
@@ -25,7 +25,7 @@ namespace GameStore.Domain.Dtos
             set 
             { 
                 precoUnitarioStr = value;
-                Decimal.TryParse(precoUnitarioStr, out precoUnitario);
+                Double.TryParse(precoUnitarioStr, out precoUnitario);
                 PrecoUnitario = precoUnitario;
             }
         }
@@ -45,17 +45,17 @@ namespace GameStore.Domain.Dtos
         [Display(Name = "Arquivo")]
         public IFormFile? Arquivo { get; set; }
 
-        public void ConfigurarPrecoProduto()
-        {
-            if (!string.IsNullOrEmpty(this.Preco))
-            {
-                this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
-            }
+        //public void ConfigurarPrecoProduto()
+        //{
+        //    if (!string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
+        //    }
 
-            if (this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
-            {
-                this.Preco = this.PrecoUnitario.ToString();
-            }
-        }
+        //    if (this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
+        //    {
+        //        this.Preco = this.PrecoUnitario.ToString();
+        //    }
+        //}
     }
 }
