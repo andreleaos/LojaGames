@@ -14,6 +14,7 @@ namespace GameStore.Domain.Dtos
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
+        public string Preco { get; set; }
         public double PrecoUnitario { get; set; }
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
@@ -30,5 +31,18 @@ namespace GameStore.Domain.Dtos
         }
 
         public IFormFile Arquivo { get; set; }
+
+        public void ConfigurarPrecoProduto()
+        {
+            if (!string.IsNullOrEmpty(this.Preco))
+            {
+                this.PrecoUnitario = Double.Parse(this.Preco.Replace(".", ","));
+            }
+
+            if (this.PrecoUnitario > 0 && string.IsNullOrEmpty(this.Preco))
+            {
+                this.Preco = this.PrecoUnitario.ToString();
+            }
+        }
     }
 }

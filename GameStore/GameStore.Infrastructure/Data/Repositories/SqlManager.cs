@@ -41,10 +41,6 @@ namespace GameStore.Infrastructure.Data.Repositories
                     sql = "delete from produto where id = @id";
                     break;
 
-                case TSqlQuery.EXCLUIR_IMAGEM:
-                    sql = "delete from imagemProduto where id = @id";
-                    break;
-
                 case TSqlQuery.CADASTRAR_IMAGEM:
                     sql = "insert into imagemProduto (url_path) values (@Url_path); SELECT SCOPE_IDENTITY();";
                     break;

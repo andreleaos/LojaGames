@@ -32,8 +32,8 @@ namespace GameStore.Service.Services
         public void Create(ProdutoDto produtoDto)
         {
             Produto produto = produtoDto.ConvertToEntity();
-            produto.UrlBlobStorage = UploadBase64ImageBlobStorage(produto.ImagemProduto.Database64Content, containerBlobStorage, produtoDto.UrlImagem);
-            produto.ImagemProduto.UrlBlobStorage = produto.UrlBlobStorage;
+            produto.SetUrlBlobStorage(UploadBase64ImageBlobStorage(produto.GetImagemProduto().GetDatabase64Content(), containerBlobStorage, produtoDto.UrlImagem));
+            produto.GetImagemProduto().SetUrlBlobStorage(produto.GetUrlBlobStorage());
             produto.Validate();
             _repository.Create(produto);
         }
@@ -44,7 +44,7 @@ namespace GameStore.Service.Services
             bool deletedImageBlobStorage = false;
             if (produto != null)
             {
-                var uri = new Uri(produto.ImagemProduto.Url);
+                var uri = new Uri(produto.GetImagemProduto().GetUrl());
                 deletedImageBlobStorage = DeleteImageBlobStorage(uri, containerBlobStorage);
             }
 
@@ -69,16 +69,16 @@ namespace GameStore.Service.Services
         {
             Produto produto = produtoDto.ConvertToEntity();
 
-            var produtoAtual = _repository.GetById(produto.Id);
-            if (produtoAtual != null && produtoAtual.ImagemProduto.Url != produtoDto.UrlImagem && produto.ImagemProduto.Database64Content != null)
+            var produtoAtual = _repository.GetById(produto.GetId());
+            if (produtoAtual != null && produtoAtual.GetImagemProduto().GetUrl() != produtoDto.UrlImagem && produto.GetImagemProduto().GetDatabase64Content != null)
             {
-                produto.UrlBlobStorage = UploadBase64ImageBlobStorage(produto.ImagemProduto.Database64Content, containerBlobStorage, produtoDto.UrlImagem);
-                produto.ImagemProduto.UrlBlobStorage = produto.UrlBlobStorage;
+                produto.SetUrlBlobStorage(UploadBase64ImageBlobStorage(produto.GetImagemProduto().GetDatabase64Content(), containerBlobStorage, produtoDto.UrlImagem));
+                produto.GetImagemProduto().SetUrlBlobStorage(produto.GetUrlBlobStorage());
             }
             else
             {
-                produto.UrlBlobStorage = produtoDto.UrlImagem;
-                produto.ImagemProduto.UrlBlobStorage = produto.UrlBlobStorage;
+                produto.SetUrlBlobStorage(produtoDto.UrlImagem);
+                produto.GetImagemProduto().SetUrlBlobStorage(produto.GetUrlBlobStorage());
             }
 
             produto.Validate();

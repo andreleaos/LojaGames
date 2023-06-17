@@ -31,8 +31,8 @@ namespace GameStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProdutoFormDto produtoForm)
         {
-            produto.ConfigurarPrecoProduto();
-            await _client.Create(produto);
+            produtoForm.ConfigurarPrecoProduto();
+            await _client.Create(produtoForm);
             return RedirectToAction("Index");
         }
 
@@ -58,9 +58,9 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ProdutoDto? produto = await _client.GetById(id);
-            produto.ConfigurarPrecoProduto();1
-            ProdutoFormDto produto = _mapper.Map<ProdutoFormDto>(produtoDto);
-            return View(produto);
+            produto.ConfigurarPrecoProduto();
+            ProdutoFormDto produtoFormDto = _mapper.Map<ProdutoFormDto>(produto);
+            return View(produtoFormDto);
         }
 
         [HttpPost]
