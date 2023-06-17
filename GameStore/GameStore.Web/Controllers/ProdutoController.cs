@@ -25,7 +25,7 @@ namespace GameStore.Web.Controllers
         }
         public async Task<IActionResult> IndexLista()
         {
-            List<ProdutoDto> produtos = await _apiProdutoService.GetAll();
+            List<ProdutoDto> produtos = await _client.GetAll();
             return View(produtos);
         }
         public IActionResult Create()
@@ -36,7 +36,7 @@ namespace GameStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProdutoFormDto produtoForm)
         {
-            produtoForm.ConfigurarPrecoProduto();
+            //produtoForm.ConfigurarPrecoProduto();
             await _client.Create(produtoForm);
             return RedirectToAction("Index");
         }
@@ -63,7 +63,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ProdutoDto? produto = await _client.GetById(id);
-            produto.ConfigurarPrecoProduto();
+            //produto.ConfigurarPrecoProduto();
             ProdutoFormDto produtoFormDto = _mapper.Map<ProdutoFormDto>(produto);
             produtoFormDto.PrecoUnitarioStr = produto.PrecoUnitario.ToString("N2");
             return View(produtoFormDto);
@@ -72,7 +72,7 @@ namespace GameStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProdutoFormDto produtoForm)
         {
-            produtoForm.ConfigurarPrecoProduto();
+            //produtoForm.ConfigurarPrecoProduto();
             await _client.Update(produtoForm);
             return RedirectToAction("Index");
         }
