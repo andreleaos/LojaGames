@@ -162,6 +162,11 @@ namespace GameStore.Domain.Entities
                 result.UrlBlobStorage = produto.GetUrlBlobStorage();
                 result.Database64Content = produto.ImagemProduto.GetDatabase64Content();
 
+                if (string.IsNullOrEmpty(result.UrlImagem) && !string.IsNullOrEmpty(result.UrlBlobStorage))
+                    result.UrlImagem = result.UrlBlobStorage;
+
+                if (string.IsNullOrEmpty(result.UrlBlobStorage) && !string.IsNullOrEmpty(result.UrlImagem))
+                    result.UrlBlobStorage = result.UrlImagem;
             }
 
             return result;    

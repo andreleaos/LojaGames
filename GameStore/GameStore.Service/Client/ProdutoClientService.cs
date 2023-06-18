@@ -20,6 +20,8 @@ namespace GameStore.Service.Client
         private HttpClient _httpClient = null;
         private string _url_base_address = string.Empty;
         private readonly IMapper _mapper;
+        private static bool local_execution = false;
+
 
         #endregion
 
@@ -31,6 +33,7 @@ namespace GameStore.Service.Client
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
             _mapper = mapper;
+            local_execution = Boolean.Parse(configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
         }
 
         #endregion
@@ -141,18 +144,23 @@ namespace GameStore.Service.Client
                 FileInfo fileInfo = new FileInfo(produtoDto.Arquivo.FileName);
                 string fileName = produtoDto.Arquivo.FileName;
 
-                string fileNameWithPath = Path.Combine(path, fileName);
+                string fileNameWithPath = string.Empty;
 
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                if (local_execution)
+                    fileNameWithPath = fileInfo.FullName;
+                else
                 {
-                    produtoDto.Arquivo.CopyTo(stream);
+                    fileNameWithPath = Path.Combine(path, fileName);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        produtoDto.Arquivo.CopyTo(stream);
+                    }
                 }
 
                 produtoDto.UrlImagem = fileNameWithPath;
             }
 
-            ProdutoDto result = _mapper.Map<ProdutoDto>(produtoDto);
-            return result;
+            return produtoDto;
         }
 
         #endregion
