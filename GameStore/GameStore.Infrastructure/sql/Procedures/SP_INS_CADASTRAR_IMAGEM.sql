@@ -30,4 +30,5 @@ CREATE PROCEDURE [dbo].[SP_INS_CADASTRAR_IMAGEM]
 AS
 BEGIN
 	INSERT INTO imagemProduto (url_blob_storage) VALUES (@Url_Blob_Storage)
+	SELECT SCOPE_IDENTITY();
 END

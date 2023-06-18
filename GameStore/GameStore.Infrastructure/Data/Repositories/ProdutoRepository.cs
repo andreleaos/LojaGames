@@ -86,7 +86,6 @@ namespace GameStore.Infrastructure.Data.Repositories
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-
                     var sql = SqlManager.GetSql(TSqlQuery.PESQUISAR_PRODUTO);
                     var produtoPesquisado = connection.QueryFirstOrDefault<Produto>(sql, new { Id = id });
 
@@ -97,8 +96,11 @@ namespace GameStore.Infrastructure.Data.Repositories
 
                         sql = SqlManager.GetSql(TSqlQuery.EXCLUIR_IMAGEM);
                         connection.Execute(sql, new { Id = produtoPesquisado.GetImagemId() });
+
                         return true;
                     }
+
+                    connection.Close();
                 }
             }
 

@@ -21,7 +21,7 @@ namespace GameStore.Service.Services
 
         private static string conectionStorageAccount = string.Empty;
         private static string containerBlobStorage = string.Empty;
-        private static bool local_execution = false;
+        private static bool _local_execution = false;
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace GameStore.Service.Services
 
             containerBlobStorage = _configuration.GetSection("ContainerBlobStorage").Value;
             conectionStorageAccount = _configuration.GetSection("ConnectionStorageAccount").Value;
-            local_execution = Boolean.Parse(_configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
+            _local_execution = Boolean.Parse(_configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
         }
 
         #endregion
@@ -44,8 +44,14 @@ namespace GameStore.Service.Services
         public void Create(ProdutoDto produtoDto)
         {
             Produto produto = produtoDto.ConvertToEntity();
-            produto.SetUrlBlobStorage(UploadBase64ImageBlobStorage(produto.GetImagemProduto().GetDatabase64Content(), containerBlobStorage, produtoDto.UrlImagem));
-            produto.GetImagemProduto().SetUrlBlobStorage(produto.GetUrlBlobStorage());
+            var imagemProduto = produto.GetImagemProduto();
+
+            if (!_local_execution)
+            {
+                produto.SetUrlBlobStorage(UploadBase64ImageBlobStorage(imagemProduto.GetDatabase64Content(), containerBlobStorage, produtoDto.UrlImagem));
+                produto.GetImagemProduto().SetUrlBlobStorage(produto.GetUrlBlobStorage());
+            }
+
             produto.Validate();
             _repository.Create(produto);
         }
@@ -131,7 +137,7 @@ namespace GameStore.Service.Services
         }
         private bool DeleteImageBlobStorage(Uri urlBlobStorage, string containerBlobStorage)
         {
-            if (local_execution)
+            if (_local_execution)
                 return true;
 
             var fileName = urlBlobStorage.LocalPath.Replace("/" + containerBlobStorage + "/", "");

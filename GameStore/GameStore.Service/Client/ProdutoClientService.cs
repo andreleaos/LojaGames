@@ -20,7 +20,8 @@ namespace GameStore.Service.Client
         private HttpClient _httpClient = null;
         private string _url_base_address = string.Empty;
         private readonly IMapper _mapper;
-        private static bool local_execution = false;
+        private static bool _local_execution = false;
+        private static string _local_path_file_images = "";
 
 
         #endregion
@@ -33,7 +34,8 @@ namespace GameStore.Service.Client
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
             _mapper = mapper;
-            local_execution = Boolean.Parse(configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
+            _local_execution = Boolean.Parse(configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
+            _local_path_file_images = configuration.GetSection("Files").GetSection("Local_Path_Images").Value;
         }
 
         #endregion
@@ -118,6 +120,7 @@ namespace GameStore.Service.Client
             result.UrlBlobStorage = produto.Url_path;
             result.ImagemProduto.SetUrlBlobStorage(produto.Url_path);
             result.Database64Content = produto.GetImagemProduto().GetDatabase64Content();
+            result.Arquivo = null;
             return result;
         }
         private HttpContent FormatContentData(ProdutoDto produto)
@@ -146,11 +149,13 @@ namespace GameStore.Service.Client
 
                 string fileNameWithPath = string.Empty;
 
-                if (local_execution)
-                    fileNameWithPath = fileInfo.FullName;
-                else
+                if (_local_execution)
+                    path = _local_path_file_images;
+
+                fileNameWithPath = Path.Combine(path, fileName);
+
+                if (!File.Exists(fileNameWithPath))
                 {
-                    fileNameWithPath = Path.Combine(path, fileName);
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
                         produtoDto.Arquivo.CopyTo(stream);

@@ -92,9 +92,6 @@ namespace GameStore.Domain.Entities
             if (PrecoUnitario <= 0)
                 throw new Exception("Preço Unitário é um campo obrigatório e deve ser maior que zero");
 
-            if (PrecoUnitario <= 0)
-                throw new Exception("Preço Unitário é um campo obrigatório e deve ser maior que zero");
-
             if(CategoriaId  <= 0)
                 throw new Exception("Categoria é um campo obrigatório e deve ser maior que zero");
 

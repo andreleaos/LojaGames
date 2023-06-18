@@ -65,16 +65,28 @@ namespace GameStore.Domain.Dtos
         public Produto ConvertToEntity()
         {
             CategoriaProduto = ConversorEnums.ConvertToEnum(this.Categoria);
+            ImagemProduto imagemProduto = new ImagemProduto(this.UrlImagem);
 
-            return new Produto(this.Id, this.Descricao, this.PrecoUnitario, CategoriaProduto, this.ImagemProduto);
+            var result = new Produto(this.Id, this.Descricao, this.PrecoUnitario, CategoriaProduto, this.ImagemProduto);
+            result.SetImagemProduto(imagemProduto);
+
+            result.SetUrl(imagemProduto.GetUrl());
+            result.SetUrlBlobStorage(imagemProduto.GetUrlBlobStorage());
+
+            return result;
         }
         public static Produto ConvertToEntity(ProdutoDto produto)
         {
             CategoriaProduto categoriaProduto = ConversorEnums.ConvertToEnum(produto.Categoria);
             ImagemProduto imagemProduto = new ImagemProduto(produto.UrlImagem);
-            //                 UrlBlobStorage = produto.UrlBlobStorage
 
-            return new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, categoriaProduto, imagemProduto);
+            var result = new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, categoriaProduto, imagemProduto);
+            result.SetImagemProduto(imagemProduto);
+
+            result.SetUrl(imagemProduto.GetUrl());
+            result.SetUrlBlobStorage(imagemProduto.GetUrlBlobStorage());
+
+            return result;
         }
         public static List<Produto> ConvertToEntity(List<ProdutoDto> produtosDto)
         {
