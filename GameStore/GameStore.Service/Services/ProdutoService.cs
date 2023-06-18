@@ -14,12 +14,19 @@ namespace GameStore.Service.Services
 {
     public class ProdutoService : IProdutoService
     {
-        private readonly IProdutoRepository _repository;
+        #region Atributos
 
+        private readonly IProdutoRepository _repository;
         private readonly IConfiguration _configuration;
 
         private static string conectionStorageAccount = string.Empty;
         private static string containerBlobStorage = string.Empty;
+        private static bool local_execution = false;
+
+        #endregion
+
+        #region Construtor
+
         public ProdutoService(IProdutoRepository repository, IConfiguration configuration)
         {
             _repository = repository;
@@ -27,7 +34,12 @@ namespace GameStore.Service.Services
 
             containerBlobStorage = _configuration.GetSection("ContainerBlobStorage").Value;
             conectionStorageAccount = _configuration.GetSection("ConnectionStorageAccount").Value;
+            local_execution = Boolean.Parse(_configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
         }
+
+        #endregion
+
+        #region Métodos Públicos
 
         public void Create(ProdutoDto produtoDto)
         {
@@ -85,7 +97,11 @@ namespace GameStore.Service.Services
             _repository.Update(produto);
         }
 
-        public string UploadBase64ImageBlobStorage(string base64Image, string container, string urlImagem)
+        #endregion
+
+        #region Métodos Auxiliares
+
+        private string UploadBase64ImageBlobStorage(string base64Image, string container, string urlImagem)
         {
             FileInfo fileInfo = new FileInfo(urlImagem);
 
@@ -107,16 +123,18 @@ namespace GameStore.Service.Services
                 var uploadFile = blobClient.Upload(stream);
             }
 
-            if(File.Exists(urlImagem))
+            if (File.Exists(urlImagem))
                 File.Delete(urlImagem);
 
             // Retorna a URL da imagem
             return blobClient.Uri.AbsoluteUri;
         }
-
-        public bool DeleteImageBlobStorage(Uri urlBlobStorage, string containerBlobStorage)
+        private bool DeleteImageBlobStorage(Uri urlBlobStorage, string containerBlobStorage)
         {
-            var fileName = urlBlobStorage.LocalPath.Replace("/"+ containerBlobStorage + "/", "");
+            if (local_execution)
+                return true;
+
+            var fileName = urlBlobStorage.LocalPath.Replace("/" + containerBlobStorage + "/", "");
 
             // Define o BLOB no qual a imagem está armazenada
             var blobClient = new BlobClient(conectionStorageAccount, containerBlobStorage, fileName);
@@ -125,6 +143,8 @@ namespace GameStore.Service.Services
 
             return deleted;
         }
+
+        #endregion
     }
 
 }

@@ -11,7 +11,6 @@ namespace GameStore.Service.Client
 {
     public interface IProdutoClientService : IGenericApiService<ProdutoDto, int>
     {
-        Task Create(ProdutoFormDto produtoFormDto);
-        Task Update(ProdutoFormDto produtoFormDto);
+
     }
 }

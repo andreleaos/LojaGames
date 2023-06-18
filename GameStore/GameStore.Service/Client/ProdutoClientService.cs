@@ -15,10 +15,15 @@ namespace GameStore.Service.Client
 {
     public class ProdutoClientService : IProdutoClientService
     {
-        private HttpClient _httpClient = null;
+        #region Atributos
 
+        private HttpClient _httpClient = null;
         private string _url_base_address = string.Empty;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
+
+        #endregion
+
+        #region Construtor
 
         public ProdutoClientService(IConfiguration configuration, IMapper mapper)
         {
@@ -28,16 +33,18 @@ namespace GameStore.Service.Client
             _mapper = mapper;
         }
 
-        public async Task Create(ProdutoFormDto produtoFormDto)
+        #endregion
+
+        #region Métodos Públicos
+
+        public async Task Create(ProdutoDto produtoDto)
         {
-            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
-
+            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoDto);
             produto.AtualizarImagemProdutoBase64();
-
-            var produtoDto = CompletedProductData(produto);
+            var result = CompletedProductData(produto);
 
             string endpoint = $"{_url_base_address}";
-            HttpContent content = FormatContentData(produtoDto);
+            HttpContent content = FormatContentData(result);
             HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
 
             if (response.IsSuccessStatusCode)
@@ -75,16 +82,15 @@ namespace GameStore.Service.Client
             var result = JsonConvert.DeserializeObject<ProdutoDto>(content);
             return result;
         }
-        public async Task Update(ProdutoFormDto produtoFormDto)
+        public async Task Update(ProdutoDto produtoDto)
         {
-            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoFormDto);
-
+            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoDto);
             produto.AtualizarImagemProdutoBase64();
 
-            var produtoDto = CompletedProductData(produto);
+            var result = CompletedProductData(produto);
 
             string endpoint = $"{_url_base_address}";
-            HttpContent content = FormatContentData(produtoDto);
+            HttpContent content = FormatContentData(result);
             HttpResponseMessage response = await _httpClient.PutAsync(endpoint, content);
 
             if (response.IsSuccessStatusCode)
@@ -95,6 +101,10 @@ namespace GameStore.Service.Client
                 throw new Exception($"Falha ao realizar o cadastro. {errormsg}");
             }
         }
+
+        #endregion
+
+        #region Métodos Auxiliares
 
         private ProdutoDto CompletedProductData(ProdutoDto produtoDto)
         {
@@ -107,7 +117,6 @@ namespace GameStore.Service.Client
             result.Database64Content = produto.GetImagemProduto().GetDatabase64Content();
             return result;
         }
-
         private HttpContent FormatContentData(ProdutoDto produto)
         {
             if (produto == null)
@@ -120,41 +129,32 @@ namespace GameStore.Service.Client
             HttpContent content = byteContent;
             return content;
         }
-
-        public ProdutoDto RealizarMapperParaProdutoDto(ProdutoFormDto produtoForm)
+        private ProdutoDto RealizarMapperParaProdutoDto(ProdutoDto produtoDto)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "Arquivos/Recebidos");
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            if(produtoForm.Arquivo != null)
+            if(produtoDto.Arquivo != null)
             {
-                FileInfo fileInfo = new FileInfo(produtoForm.Arquivo.FileName);
-                string fileName = produtoForm.Arquivo.FileName;
+                FileInfo fileInfo = new FileInfo(produtoDto.Arquivo.FileName);
+                string fileName = produtoDto.Arquivo.FileName;
 
                 string fileNameWithPath = Path.Combine(path, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    produtoForm.Arquivo.CopyTo(stream);
+                    produtoDto.Arquivo.CopyTo(stream);
                 }
 
-                produtoForm.UrlImagem = fileNameWithPath;
+                produtoDto.UrlImagem = fileNameWithPath;
             }
 
-            ProdutoDto produtoDto = _mapper.Map<ProdutoDto>(produtoForm);
-            return produtoDto;
+            ProdutoDto result = _mapper.Map<ProdutoDto>(produtoDto);
+            return result;
         }
 
-        public Task Create(ProdutoDto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(ProdutoDto entity)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

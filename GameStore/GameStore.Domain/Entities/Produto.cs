@@ -1,5 +1,6 @@
 ﻿using GameStore.Domain.Dtos;
 using GameStore.Domain.Enums;
+using GameStore.Domain.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,11 +36,26 @@ namespace GameStore.Domain.Entities
         {
             Id = id;
         }
+
+        public Produto(int id, string descricao, double precoUnitario, string categoria, ImagemProduto imagem)
+            : this(descricao, precoUnitario, categoria, imagem)
+        {
+            Id = id;
+        }
+
         public Produto(string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
         {
             this.Descricao = descricao;
             this.PrecoUnitario = precoUnitario;
             this.Categoria = categoria;
+            this.ImagemProduto = imagem;
+        }
+
+        public Produto(string descricao, double precoUnitario, string categoria, ImagemProduto imagem)
+        {
+            this.Descricao = descricao;
+            this.PrecoUnitario = precoUnitario;
+            this.Categoria = ConversorEnums.ConvertToEnum(categoria);
             this.ImagemProduto = imagem;
         }
         public Produto() { }

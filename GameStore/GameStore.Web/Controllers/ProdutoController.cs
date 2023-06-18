@@ -4,42 +4,41 @@ using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using GameStore.Service.Client;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace GameStore.Web.Controllers
 {
     public class ProdutoController : Controller
     {
-        private readonly IProdutoClientService _client;
-        private IMapper _mapper;
+        #region Atributos
 
+        private readonly IProdutoClientService _client;
+        private readonly IMapper _mapper;
+
+        #endregion
+
+        #region Construtor
         public ProdutoController(IProdutoClientService client, IMapper mapper)
         {
             _client = client;
             _mapper = mapper;
         }
+        #endregion
+
+        #region Listagem de Produtos
 
         public async Task<IActionResult> Index()
         {
-            List<ProdutoDto> produtos = await _client.GetAll();
-            return View(produtos);
+            return await ListarProdutos();
         }
         public async Task<IActionResult> IndexLista()
         {
-            List<ProdutoDto> produtos = await _client.GetAll();
-            return View(produtos);
-        }
-        public IActionResult Create()
-        {
-            return View();
+            return await ListarProdutos();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(ProdutoFormDto produtoForm)
-        {
-            //produtoForm.ConfigurarPrecoProduto();
-            await _client.Create(produtoForm);
-            return RedirectToAction("Index");
-        }
+        #endregion
+
+        #region Consulta Por Id - Detalhe do Produto
 
         public async Task<IActionResult> Details(int id)
         {
@@ -47,12 +46,30 @@ namespace GameStore.Web.Controllers
             return View(produto);
         }
 
+        #endregion
+
+        #region Cadastro de Produtos
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(ProdutoDto produtoDto)
+        {
+            produtoDto.ConfigurarPrecoProduto();
+            await _client.Create(produtoDto);
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region Exclusão de Produto
+
         public async Task<IActionResult> Delete(int id)
         {
             ProdutoDto? produto = await _client.GetById(id);
             return View(produto);
         }
-
         [HttpPost]
         public async Task<IActionResult> Delete([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
         {
@@ -60,21 +77,34 @@ namespace GameStore.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
+
+        #region Atualização de Produto
+
         public async Task<IActionResult> Edit(int id)
         {
-            ProdutoDto? produto = await _client.GetById(id);
+            ProdutoDto? produtoDto = await _client.GetById(id);
             //produto.ConfigurarPrecoProduto();
-            ProdutoFormDto produtoFormDto = _mapper.Map<ProdutoFormDto>(produto);
-            produtoFormDto.PrecoUnitarioStr = produto.PrecoUnitario.ToString("N2");
-            return View(produtoFormDto);
+            produtoDto.PrecoUnitarioStr = produtoDto.PrecoUnitario.ToString("N2");
+            return View(produtoDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ProdutoFormDto produtoForm)
+        public async Task<IActionResult> Edit(ProdutoDto produtoDto)
         {
-            //produtoForm.ConfigurarPrecoProduto();
-            await _client.Update(produtoForm);
+            produtoDto.ConfigurarPrecoProduto();
+            await _client.Update(produtoDto);
             return RedirectToAction("Index");
         }
+
+        #endregion
+
+        #region Métodos Auxiliares
+        private async Task<IActionResult> ListarProdutos()
+        {
+            List<ProdutoDto> produtos = await _client.GetAll();
+            return View(produtos);
+        }
+        #endregion
     }
 }

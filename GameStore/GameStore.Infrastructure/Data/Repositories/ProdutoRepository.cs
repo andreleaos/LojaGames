@@ -16,16 +16,26 @@ namespace GameStore.Infrastructure.Data.Repositories
 {
     public class ProdutoRepository : SqlServerBaseRepository, IProdutoRepository
     {
+        #region Atributos
+
         private readonly IConfigParameters _configParameters;
         private readonly IConfiguration _configuration;
-
         private static string _connectionString = string.Empty;
+
+        #endregion
+
+        #region Construtor
+
         public ProdutoRepository(IConfiguration configuration, IConfigParameters configParameters)
         {
             _configuration = configuration; 
             _configParameters = configParameters;
             SetConnectionConfig();
         }
+
+        #endregion
+
+        #region Métodos Públicos
 
         public void Create(Produto produto)
         {
@@ -69,7 +79,6 @@ namespace GameStore.Infrastructure.Data.Repositories
                 }
             }
         }
-
         public bool Delete(int id)
         {
             if (id > 0)
@@ -95,7 +104,6 @@ namespace GameStore.Infrastructure.Data.Repositories
 
             return false;
         }
-
         public List<Produto> GetAll()
         {
             List<Produto> result = null;
@@ -124,7 +132,6 @@ namespace GameStore.Infrastructure.Data.Repositories
             CompleteData(produto);
             return produto;
         }
-
         public void Update(Produto produto)
         {
             var produtoPesquisado = GetById(produto.GetId());
@@ -172,6 +179,10 @@ namespace GameStore.Infrastructure.Data.Repositories
             }
         }
 
+        #endregion
+
+        #region Métodos Privados Auxiliares
+
         private List<Produto> CleanerImageContentData(List<Produto> produtos)
         {
             var result = new List<Produto>();
@@ -201,7 +212,6 @@ namespace GameStore.Infrastructure.Data.Repositories
             if (produto != null)
                 produto.SetImagemProduto(new ImagemProduto(produto.GetImagemId(), produto.GetUrl()));
         }
-
         public async Task<bool> SeedAsync(string nomeTabela, int retry = 0)
         {
             var retryForAvailability = retry;
@@ -259,7 +269,6 @@ namespace GameStore.Infrastructure.Data.Repositories
                 throw;
             }
         }
-
         private void SetConnectionConfig()
         {
             _configParameters.SetGeneralConfig();
@@ -269,6 +278,6 @@ namespace GameStore.Infrastructure.Data.Repositories
                 _connectionString = _configuration.GetConnectionString("lojaGamesDB");
         }
 
-
+        #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GameStore.Domain.Dtos;
+using GameStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace GameStore.IoC.Profiles
     {
         public ProdutoDtoProfile()
         {
-            CreateMap<ProdutoFormDto, ProdutoDto>().ReverseMap();
+            CreateMap<Produto, ProdutoDto>().ReverseMap();
         }
     }
 }
