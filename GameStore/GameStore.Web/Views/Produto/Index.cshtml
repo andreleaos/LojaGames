@@ -53,7 +53,7 @@
 <h3>Gestão de Produtos</h3>
 
 <p>
-    <a asp-action="Create">Adicionar Novo</a>
+    <a asp-action="Create" class="btn btn-primary">Adicionar Novo</a>
 </p>
 <div class="container">
     <section style="position: relative">
@@ -81,17 +81,17 @@
 
                                     <div class="row">
                                         <p>
-                                            @Html.ActionLink("Editar", "Edit", new {  id = item.Id }, new { @class = "btn btn-primary"})
+                                            @Html.ActionLink("Editar", "Edit", new {  id = item.Id }, new { @class = "btn btn-sm btn-secondary"})
                                         </p>
                                     </div>
                                     <div class="row">
                                         <p>
-                                            @Html.ActionLink("Detalhes", "Details", new {  id = item.Id }, new { @class = "btn btn-primary"})
+                                            @Html.ActionLink("Detalhes", "Details", new {  id = item.Id }, new { @class = "btn btn-sm btn-info"})
                                         </p>
                                     </div>
                                     <div class="row">
                                         <p>
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary"})
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-sm btn-danger"})
                                         </p>
                                     </div>
                                 </div>
@@ -112,4 +112,9 @@
             </div>
         </div>
     </section>
+</div>
+<div class="container">
+    <p>
+        <a asp-action="" class="btn btn-warning">Voltar</a>
+    </p>    
 </div>

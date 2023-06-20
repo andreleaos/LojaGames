@@ -42,15 +42,14 @@
                 <input asp-for="Arquivo" type="file" class="form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <input type="submit" value="Salvar " class="btn btn-primary" />
+                |
+                <a asp-action="IndexLista" class="btn btn-warning">Voltar</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="IndexLista">Voltar</a>
-</div>
 
 @section Scripts {
     @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

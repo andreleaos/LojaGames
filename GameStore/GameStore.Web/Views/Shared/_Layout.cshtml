@@ -2,8 +2,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>>@ViewData["Title"] - GameStore.Web</title>
+    <title>>@ViewData["Title"] - GameStore Web - Seu canal online para gestão de loja de games.</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="~/css/styles.css" rel="stylesheet" />
     <style>
         body {
             padding-top: 60px;
@@ -37,7 +40,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameStore.Web</a>
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameStore Web -  Sua loja de games online</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -76,10 +79,11 @@
             &copy; 2023 - GameStore.Web. Todos os direitos reservados.
         </div>
     </footer>
-
+    <script src="~/js/carrosel.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
