@@ -34,7 +34,7 @@ namespace GameStore.Service.Services
 
             containerBlobStorage = _configuration.GetSection("ContainerBlobStorage").Value;
             conectionStorageAccount = _configuration.GetSection("ConnectionStorageAccount").Value;
-            _local_execution = Boolean.Parse(_configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
+            _local_execution = Boolean.Parse(_configuration.GetSection("EnableLocalExecution").Value);
         }
 
         #endregion

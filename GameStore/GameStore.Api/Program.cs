@@ -10,7 +10,7 @@ namespace GameStore.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            GameStoreRegisterDependencies.Configure(builder.Services);
+            GameStoreRegisterDependencies.Configure(builder.Services, builder.Configuration);
 
             // Add services to the container.
 
@@ -28,6 +28,20 @@ namespace GameStore.Api
                 app.UseSwaggerUI();
             }
 
+            SetSeedConfiguration(app);
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+
+            app.MapControllers();
+
+            app.Run();
+        }
+ 
+        private static void SetSeedConfiguration(WebApplication? app)
+        {
             using (var scope = app.Services.CreateScope())
             {
                 var scopedProvider = scope.ServiceProvider;
@@ -53,16 +67,6 @@ namespace GameStore.Api
                     app.Logger.LogError(ex, "Ocorreu um erro para criar a " + momentoCriacao);
                 }
             }
-
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }

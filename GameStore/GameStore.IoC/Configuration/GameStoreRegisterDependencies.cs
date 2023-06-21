@@ -10,11 +10,12 @@ namespace GameStore.IoC.Configuration
 {
     public static class GameStoreRegisterDependencies
     {
-        public static void Configure(IServiceCollection services)
+        public static void Configure(IServiceCollection services, IConfiguration configuration)
         {
             AddInfrastructureDependencies(services);
             AddServicesDependencies(services);
             AddAutoMapper(services);
+            ConfigureDatabase(configuration);
         }
 
         private static void AddInfrastructureDependencies(IServiceCollection services)
@@ -31,9 +32,9 @@ namespace GameStore.IoC.Configuration
 
         private static void ConfigureDatabase(IConfiguration configuration)
         {
-            var connectionParameter = configuration["FeatureFlags:enable_connection_local_db"];
+            var connectionParameter = configuration["EnableLocalExecution"];
             var enableConnectionLocal = Boolean.Parse(connectionParameter);
-            GeneralConfigApp.ENABLE_CONNECTION_LOCAL_DB = enableConnectionLocal;
+            EnableConnectionLocal(enableConnectionLocal);
         }
 
         public static void EnableConnectionLocal(bool enabled)

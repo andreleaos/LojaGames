@@ -8,7 +8,7 @@ namespace GameStore.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            GameStoreRegisterDependencies.Configure(builder.Services);
+            GameStoreRegisterDependencies.Configure(builder.Services, builder.Configuration);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

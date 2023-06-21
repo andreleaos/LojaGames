@@ -33,8 +33,8 @@ namespace GameStore.Service.Client
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(_url_base_address);
             _mapper = mapper;
-            _local_execution = Boolean.Parse(configuration.GetSection("FeatureFlags").GetSection("enable_connection_local_db").Value);
-            _local_path_file_images = configuration.GetSection("Files").GetSection("Local_Path_Images").Value;
+            _local_execution = Boolean.Parse(configuration.GetSection("EnableLocalExecution").Value);
+            _local_path_file_images = configuration.GetSection("LocalPathImages").Value;
         }
 
         #endregion
