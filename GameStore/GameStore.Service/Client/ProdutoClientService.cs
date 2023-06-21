@@ -23,7 +23,6 @@ namespace GameStore.Service.Client
         private static bool _local_execution = false;
         private static string _local_path_file_images = "";
 
-
         #endregion
 
         #region Construtor
