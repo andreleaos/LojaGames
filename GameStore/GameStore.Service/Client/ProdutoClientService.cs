@@ -139,9 +139,6 @@ namespace GameStore.Service.Client
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "Arquivos/Recebidos");
 
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
             if(produtoDto.Arquivo != null)
             {
                 FileInfo fileInfo = new FileInfo(produtoDto.Arquivo.FileName);
@@ -153,6 +150,9 @@ namespace GameStore.Service.Client
                     path = _local_path_file_images;
 
                 fileNameWithPath = Path.Combine(path, fileName);
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
                 if (!File.Exists(fileNameWithPath))
                 {
