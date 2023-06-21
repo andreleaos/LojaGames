@@ -17,17 +17,23 @@ namespace GameStore.Domain.Dtos
         public int Id { get; set; }
 
         [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "Campo descrição é obrigatório")]
+        [StringLength(150, ErrorMessage = "O campo Nome deve ter no máximo 150 caracteres.")]
         public string Descricao { get; set; }
 
         public double PrecoUnitario { get; set; }
 
         [Display(Name = "Preço Unitário")]
+        [Required(ErrorMessage = "Campo Preco Unitario é obrigatório")]
         public string PrecoUnitarioStr { get; set; }
 
         [Display(Name = "Categoria")]
+        [Required(ErrorMessage = "Campo Categoria é obrigatório")]
         public string Categoria { get; set; }
         public CategoriaProduto CategoriaProduto { get; set; }
+
         [Display(Name = "URL Blog Storage")]
+        [Required(ErrorMessage = "Campo URL é obrigatório")]
         public string UrlImagem { get; set; }
         public string UrlBlobStorage { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
