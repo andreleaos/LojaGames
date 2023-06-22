@@ -1,6 +1,7 @@
 using GameStore.Infrastructure.Data.Repositories;
 using GameStore.IoC.Configuration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 
 namespace GameStore.Api
 {
@@ -12,6 +13,12 @@ namespace GameStore.Api
 
             GameStoreRegisterDependencies.Configure(builder.Services, builder.Configuration);
 
+            builder.Host.ConfigureLogging((hostingContext, logging) =>
+            {
+                logging.AddApplicationInsights();
+                logging.AddFilter<ApplicationInsightsLoggerProvider>("", LogLevel.Information);
+            });
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -22,11 +29,15 @@ namespace GameStore.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
 
             SetSeedConfiguration(app);
 

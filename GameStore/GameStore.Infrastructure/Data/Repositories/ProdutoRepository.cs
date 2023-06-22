@@ -4,6 +4,7 @@ using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using GameStore.Infrastructure.Config;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,16 +22,22 @@ namespace GameStore.Infrastructure.Data.Repositories
         private readonly IConfigParameters _configParameters;
         private readonly IConfiguration _configuration;
         private static string _connectionString = string.Empty;
+        private readonly ILogger<ProdutoRepository> _logger;
+
 
         #endregion
 
         #region Construtor
 
-        public ProdutoRepository(IConfiguration configuration, IConfigParameters configParameters)
+        public ProdutoRepository(
+            IConfiguration configuration, 
+            IConfigParameters configParameters,
+            ILogger<ProdutoRepository> logger)
         {
             _configuration = configuration; 
             _configParameters = configParameters;
             SetConnectionConfig();
+            _logger = logger;
         }
 
         #endregion
@@ -70,7 +77,9 @@ namespace GameStore.Infrastructure.Data.Repositories
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        throw new Exception($"Erro ao realizar o cadastro. {ex.Message}");
+                        var msg = $"[Repository] - Erro ao realizar o cadastro. {ex.Message}";
+                        _logger.LogInformation(msg);
+                        throw new Exception(msg);
                     }
                     finally
                     {
@@ -154,7 +163,7 @@ namespace GameStore.Infrastructure.Data.Repositories
                             var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
                             connection.Execute(
                                 sql, 
-                                new { Descricao = produto.GetDescricao(), PrecoUnitario = produto.GetPrecoUnitario(), Categoria = produto.CategoriaId }, 
+                                new { ID = produto.GetId(), Descricao = produto.GetDescricao(), PrecoUnitario = produto.GetPrecoUnitario(), Categoria = produto.CategoriaId }, 
                                 transaction
                             );
 

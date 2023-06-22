@@ -136,7 +136,7 @@ namespace GameStore.Service.Client
         }
         private ProdutoDto RealizarMapperParaProdutoDto(ProdutoDto produtoDto)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "Arquivos/Recebidos");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "ArquivosRecebidos");
 
             if(produtoDto.Arquivo != null)
             {
