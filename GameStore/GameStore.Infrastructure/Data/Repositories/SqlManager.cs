@@ -28,7 +28,7 @@ namespace GameStore.Infrastructure.Data.Repositories
                     break;
 
                 case TSqlQuery.ATUALIZAR_PRODUTO:
-                    sql = "EXECUTE SP_UPD_ATUALIZAR_PRODUTO @descricao, @precoUnitario, @id";
+                    sql = "EXECUTE SP_UPD_ATUALIZAR_PRODUTO @descricao, @precoUnitario, @CategoriaId, @id";
                     break;
 
                 case TSqlQuery.EXCLUIR_PRODUTO:
@@ -50,8 +50,8 @@ namespace GameStore.Infrastructure.Data.Repositories
                 case TSqlQuery.PESQUISAR_IMAGEM_PELA_URL:
                     sql = "EXECUTE SP_SEL_PESQUISAR_IMAGEM_PELA_URL @Url_Blob_Storage";
                     break;
-                case TSqlQuery.SEED_PRODUTO:
-
+                case TSqlQuery.LISTAR_CATEGORIA:
+                    sql = "EXECUTE SP_SEL_LISTAR_CATEGORIA";
                     break;
             }
 

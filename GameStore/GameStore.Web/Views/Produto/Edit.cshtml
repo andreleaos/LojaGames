@@ -1,7 +1,9 @@
-﻿@model GameStore.Domain.Dtos.ProdutoDto
+﻿@using GameStore.Domain.Dtos;
+@model GameStore.Domain.Dtos.ProdutoViewDto
 
 @{
     ViewData["Title"] = "Edit";
+    var categorias = ViewBag.Categorias as List<CategoriaDto>;
 }
 
 <h3>Gestão de Produtos</h3>
@@ -13,9 +15,7 @@
         <form asp-controller="Produto" asp-action="Edit" method="post" class="form-container" enctype="multipart/form-data" id="ProdutoEdit" name="ProdutoEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+                <input asp-for="Id" class="form-control" type="hidden" />
             </div>
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
@@ -29,13 +29,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
+                <select name="categoriaProduto" id="categoriaProduto" asp-for="CategoriaProduto" class="form-control">
+                    <option value="">Selecione uma categoria</option>
+                    @foreach (var categoria in categorias)
+                    {
+                        <option value="@categoria.Id">@categoria.Descricao</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoriaProduto" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UrlImagem" class="control-label"></label>
-                <input asp-for="UrlImagem" class="form-control" />
-                <span asp-validation-for="UrlImagem" class="text-danger"></span>
+                <input asp-for="UrlImagem" class="form-control" readonly/>
             </div>
             <div class="form-group">
                 <label asp-for="Arquivo" class="control-label"></label>
@@ -49,7 +54,7 @@
 </div>
 
 <div>
-    <a asp-action="IndexLista">Voltar</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {

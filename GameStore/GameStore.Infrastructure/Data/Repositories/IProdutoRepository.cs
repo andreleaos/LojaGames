@@ -10,6 +10,10 @@ namespace GameStore.Infrastructure.Data.Repositories
 {
     public interface IProdutoRepository : IGenericRepoService<Produto, int>
     {
-        Task<bool> SeedAsync(string nomeTabela, int retry = 0);
+        void CreateTablesAndSeed(int retry = 0);
+        void CreateProcedures(int retry = 0);
+        void CreateProceduresIniciais(int retry = 0);
+        void CreateDataBaseLocal(int retry = 0);
+        Task<List<Catetoria>> GetAllCategoria();
     }
 }

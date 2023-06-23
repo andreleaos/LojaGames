@@ -19,6 +19,6 @@ namespace GameStore.Domain.Enums
         EXCLUIR_IMAGEM,
         SEED_CATEGORIA,
         SEED_IMAGEM_PRODUTO,
-        SEED_PRODUTO,
+        LISTAR_CATEGORIA
     }
 }

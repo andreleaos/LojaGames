@@ -13,7 +13,9 @@ namespace GameStore.IoC.Profiles
     {
         public ProdutoDtoProfile()
         {
+            CreateMap<ProdutoViewDto, ProdutoDto>().ReverseMap();
             CreateMap<Produto, ProdutoDto>().ReverseMap();
+            CreateMap<Catetoria, CategoriaDto>().ReverseMap();
         }
     }
 }

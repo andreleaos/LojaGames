@@ -53,17 +53,17 @@ namespace GameStore.Domain.Entities
 
         #region Construtores
         public ImagemProduto() { }
-        public ImagemProduto(int id, string url)
-            : this(url)
+        public ImagemProduto(int id, string url, string database64Content = "")
+            : this(url, database64Content)
         {
             Id = id;
         }
-        public ImagemProduto(string url)
+        public ImagemProduto(string url, string database64Content = "")
         {
             Url = url;
             UrlBlobStorage = url;
             DataStream = GetDataStream(url);
-            Database64Content = GetDatabase64(DataStream);
+            Database64Content = DataStream != null ? GetDatabase64(DataStream) : !string.IsNullOrEmpty(database64Content) ? database64Content : string.Empty;
         }
         public ImagemProduto(int id, string url, byte[] dataStream, string database64)
         {

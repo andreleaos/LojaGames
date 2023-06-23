@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameStore.Service.Services
 {
-    public interface IProdutoService : IGenericRepoService<ProdutoDto, int>
+    public interface ICategoriaService : IGenericRepoService<CategoriaDto, int>
     {
     }
 }

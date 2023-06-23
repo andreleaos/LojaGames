@@ -5,6 +5,7 @@ using GameStore.Domain.Enums;
 using GameStore.Service.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using NuGet.Protocol.Core.Types;
 
 namespace GameStore.Web.Controllers
 {
@@ -13,15 +14,22 @@ namespace GameStore.Web.Controllers
         #region Atributos
 
         private readonly IProdutoClientService _client;
+        private readonly ICategoriaClientService _clientCategoria;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+
+        private static bool _local_execution = false;
 
         #endregion
 
         #region Construtor
-        public ProdutoController(IProdutoClientService client, IMapper mapper)
+        public ProdutoController(IProdutoClientService client, IMapper mapper, ICategoriaClientService clientCategoria, IConfiguration configuration)
         {
             _client = client;
             _mapper = mapper;
+            _clientCategoria = clientCategoria;
+            _configuration = configuration;
+            _local_execution = bool.Parse(_configuration.GetSection("EnableLocalExecution").Value);
         }
         #endregion
 
@@ -29,6 +37,7 @@ namespace GameStore.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.LocalExecution = _local_execution;
             return await ListarProdutos();
         }
         public async Task<IActionResult> IndexLista()
@@ -42,23 +51,25 @@ namespace GameStore.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            ProdutoDto? produto = await _client.GetById(id);
+            ProdutoViewDto? produto = await _client.GetById(id);
             return View(produto);
         }
 
         #endregion
 
         #region Cadastro de Produtos
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var categorias =  await _clientCategoria.GetAll();
+            ViewBag.Categorias = categorias;
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(ProdutoDto produtoDto)
+        public async Task<IActionResult> Create(ProdutoViewDto produtoViewDto)
         {
-            produtoDto.ConfigurarPrecoProduto();
-            await _client.Create(produtoDto);
-            return RedirectToAction("IndexLista");
+            await _client.Create(produtoViewDto);
+            return RedirectToAction("Index");
         }
 
         #endregion
@@ -67,14 +78,14 @@ namespace GameStore.Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            ProdutoDto? produto = await _client.GetById(id);
+            ProdutoViewDto? produto = await _client.GetById(id);
             return View(produto);
         }
         [HttpPost]
         public async Task<IActionResult> Delete([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
         {
             await _client.Delete(produto.Id);
-            return RedirectToAction("IndexLista");
+            return RedirectToAction("Index");
         }
 
         #endregion
@@ -83,18 +94,21 @@ namespace GameStore.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            ProdutoDto? produtoDto = await _client.GetById(id);
-            //produto.ConfigurarPrecoProduto();
-            produtoDto.PrecoUnitarioStr = produtoDto.PrecoUnitario.ToString("N2");
-            return View(produtoDto);
+            ProdutoViewDto? produtoViewDto = await _client.GetById(id);
+            produtoViewDto.MapperCategoriaToCategoriaEnum();
+
+            produtoViewDto.PrecoUnitarioStr = produtoViewDto.PrecoUnitario.ToString("N2");
+
+            var categorias = await _clientCategoria.GetAll();
+            ViewBag.Categorias = categorias;
+            return View(produtoViewDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ProdutoDto produtoDto)
+        public async Task<IActionResult> Edit(ProdutoViewDto produtoViewDto)
         {
-            produtoDto.ConfigurarPrecoProduto();
-            await _client.Update(produtoDto);
-            return RedirectToAction("IndexLista");
+            await _client.Update(produtoViewDto);
+            return RedirectToAction("Index");
         }
 
         #endregion
@@ -102,7 +116,7 @@ namespace GameStore.Web.Controllers
         #region Métodos Auxiliares
         private async Task<IActionResult> ListarProdutos()
         {
-            List<ProdutoDto> produtos = await _client.GetAll();
+            List<ProdutoViewDto> produtos = await _client.GetAll();
             return View(produtos);
         }
         #endregion

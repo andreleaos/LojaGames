@@ -31,6 +31,12 @@ namespace GameStore.Domain.Entities
 
         #region Construtores
 
+        public Produto(int id, string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem, string urlBlobStorage)
+            : this(descricao, precoUnitario, categoria, imagem, urlBlobStorage)
+        {
+            Id = id;
+        }
+
         public Produto(int id, string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem)
             : this(descricao, precoUnitario, categoria, imagem)
         {
@@ -49,6 +55,14 @@ namespace GameStore.Domain.Entities
             this.PrecoUnitario = precoUnitario;
             this.Categoria = categoria;
             this.ImagemProduto = imagem;
+        }
+        public Produto(string descricao, double precoUnitario, CategoriaProduto categoria, ImagemProduto imagem, string urlBlobStorage)
+        {
+            this.Descricao = descricao;
+            this.PrecoUnitario = precoUnitario;
+            this.Categoria = categoria;
+            this.ImagemProduto = imagem;
+            this.UrlBlobStorage = urlBlobStorage;
         }
 
         public Produto(string descricao, double precoUnitario, string categoria, ImagemProduto imagem)
@@ -115,7 +129,7 @@ namespace GameStore.Domain.Entities
 
         public Produto CreateProductByObjectCopy()
         {
-            var result = new Produto(this.Id, this.Descricao, this.PrecoUnitario, this.Categoria, this.ImagemProduto);
+            var result = new Produto(this.Id, this.Descricao, this.PrecoUnitario, this.Categoria, this.ImagemProduto, this.UrlBlobStorage);
             return result;
         }
 

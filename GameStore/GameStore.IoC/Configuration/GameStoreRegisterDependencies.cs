@@ -28,6 +28,8 @@ namespace GameStore.IoC.Configuration
         {
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IProdutoClientService, ProdutoClientService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<ICategoriaClientService, CategoriaClientService>();
         }
 
         private static void ConfigureDatabase(IConfiguration configuration)
