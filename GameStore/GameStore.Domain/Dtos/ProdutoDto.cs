@@ -1,13 +1,7 @@
 ﻿using GameStore.Domain.Entities;
 using GameStore.Domain.Enums;
 using GameStore.Domain.Utils;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameStore.Domain.Dtos
 {
@@ -38,8 +32,8 @@ namespace GameStore.Domain.Dtos
         public string UrlBlobStorage { get; set; }
         public ImagemProduto ImagemProduto { get; set; }
 
-        [Display(Name = "Arquivo")]
-        public IFormFile? Arquivo { get; set; }
+        //[Display(Name = "Arquivo")]
+        //public IFormFile? Arquivo { get; set; }
 
         public string Database64Content { get; set; }
         public string PrecoCurrencyFormat
@@ -51,9 +45,10 @@ namespace GameStore.Domain.Dtos
             }
         }
 
+
         public ImagemProduto AtualizarImagemProdutoBase64()
         {
-            return ImagemProduto = new ImagemProduto(this.UrlImagem);
+            return ImagemProduto = new ImagemProduto(this.UrlImagem, this.Database64Content);
         }
 
         public void ConfigurarPrecoProduto()
@@ -71,7 +66,7 @@ namespace GameStore.Domain.Dtos
         public Produto ConvertToEntity()
         {
             CategoriaProduto = ConversorEnums.ConvertToEnum(this.Categoria);
-            ImagemProduto imagemProduto = new ImagemProduto(this.UrlImagem);
+            ImagemProduto imagemProduto = new ImagemProduto(this.UrlImagem, this.Database64Content);
 
             var result = new Produto(this.Id, this.Descricao, this.PrecoUnitario, CategoriaProduto, this.ImagemProduto);
             result.SetImagemProduto(imagemProduto);
@@ -84,7 +79,7 @@ namespace GameStore.Domain.Dtos
         public static Produto ConvertToEntity(ProdutoDto produto)
         {
             CategoriaProduto categoriaProduto = ConversorEnums.ConvertToEnum(produto.Categoria);
-            ImagemProduto imagemProduto = new ImagemProduto(produto.UrlImagem);
+            ImagemProduto imagemProduto = new ImagemProduto(produto.UrlImagem, produto.Database64Content);
 
             var result = new Produto(produto.Id, produto.Descricao, produto.PrecoUnitario, categoriaProduto, imagemProduto);
             result.SetImagemProduto(imagemProduto);

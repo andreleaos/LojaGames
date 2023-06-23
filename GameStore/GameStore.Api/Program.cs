@@ -39,12 +39,17 @@ namespace GameStore.Api
             app.UseSwaggerUI();
 
 
+            SetCreateDataBaseLocal(app);
+
+            SetCreateProceduresIniciais(app);
+
             SetSeedConfiguration(app);
+            
+            SetCreateProcedures(app);
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -60,22 +65,63 @@ namespace GameStore.Api
                 try
                 {
                     var produtoRepository = scopedProvider.GetRequiredService<IProdutoRepository>();
-
-                    momentoCriacao = "tabela categoria.";
-                    app.Logger.LogInformation("criando a " + momentoCriacao);
-                    var seedImplemented = produtoRepository.SeedAsync("categoria");
-
-                    momentoCriacao = "tabela imagemProduto.";
-                    app.Logger.LogInformation("criando a " + momentoCriacao);
-                    seedImplemented = produtoRepository.SeedAsync("imagemProduto");
-
-                    momentoCriacao = "tabela produto.";
-                    app.Logger.LogInformation("criando a " + momentoCriacao);
-                    seedImplemented = produtoRepository.SeedAsync("produto");
+                    produtoRepository.CreateTablesAndSeed();
                 }
                 catch (Exception ex)
                 {
                     app.Logger.LogError(ex, "Ocorreu um erro para criar a " + momentoCriacao);
+                }
+            }
+        }
+
+        private static void SetCreateProceduresIniciais(WebApplication? app)
+        {
+            using(var scope = app.Services.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+
+                try
+                {
+                    var produtoRepository = scopedProvider.GetRequiredService<IProdutoRepository>();
+                    produtoRepository.CreateProceduresIniciais();
+                }
+                catch (Exception ex)
+                {
+                    app.Logger.LogError(ex, "Ocorreu um erro para criar as Procedures Iniciais.");
+                }
+            }
+        }
+        private static void SetCreateProcedures(WebApplication? app)
+        {
+            using(var scope = app.Services.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+
+                try
+                {
+                    var produtoRepository = scopedProvider.GetRequiredService<IProdutoRepository>();
+                    produtoRepository.CreateProcedures();
+                }
+                catch (Exception ex)
+                {
+                    app.Logger.LogError(ex, "Ocorreu um erro para criar as Procedures.");
+                }
+            }
+        }
+        private static void SetCreateDataBaseLocal(WebApplication? app)
+        {
+            using(var scope = app.Services.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+
+                try
+                {
+                    var produtoRepository = scopedProvider.GetRequiredService<IProdutoRepository>();
+                    produtoRepository.CreateDataBaseLocal();
+                }
+                catch (Exception ex)
+                {
+                    app.Logger.LogError(ex, "Ocorreu um erro para criar o banco de dados.");
                 }
             }
         }

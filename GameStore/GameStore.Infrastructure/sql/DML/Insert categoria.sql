@@ -19,9 +19,9 @@ BEGIN
 			BEGIN
 				insert into categoria (descricao) values ('Periferico')
 			END
-			
-		COMMIT;
 
+			SELECT SCOPE_IDENTITY();			
+		COMMIT;
 	END TRY
 	BEGIN CATCH
 

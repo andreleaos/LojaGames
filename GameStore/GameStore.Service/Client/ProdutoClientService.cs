@@ -41,9 +41,13 @@ namespace GameStore.Service.Client
 
         #region Métodos Públicos
 
-        public async Task Create(ProdutoDto produtoDto)
+        public async Task Create(ProdutoViewDto produtoViewDto)
         {
-            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoDto);
+            produtoViewDto.MapperCategoriaEnumToCategoria();
+
+            ProdutoDto produto = _mapper.Map<ProdutoDto>(RealizarMapperParaProdutoDto(produtoViewDto));
+            produto.ConfigurarPrecoProduto();
+            
             produto.AtualizarImagemProdutoBase64();
             var result = CompletedProductData(produto);
 
@@ -68,27 +72,33 @@ namespace GameStore.Service.Client
             var result = JsonConvert.DeserializeObject<bool>(content);
             return result;
         }
-        public async Task<List<ProdutoDto>> GetAll()
+        public async Task<List<ProdutoViewDto>> GetAll()
         {
             string endpoint = $"{_url_base_address}";
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
 
             var content = response.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<List<ProdutoDto>>(content);
+            var result = JsonConvert.DeserializeObject<List<ProdutoViewDto>>(content);
+
             return result;
         }
-        public async Task<ProdutoDto?> GetById(int id)
+        public async Task<ProdutoViewDto?> GetById(int id)
         {
             string endpoint = $"{_url_base_address}/{id}";
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
 
             var content = response.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<ProdutoDto>(content);
+            var result = JsonConvert.DeserializeObject<ProdutoViewDto>(content);
             return result;
         }
-        public async Task Update(ProdutoDto produtoDto)
+        public async Task Update(ProdutoViewDto produtoViewDto)
         {
-            ProdutoDto produto = RealizarMapperParaProdutoDto(produtoDto);
+            produtoViewDto.MapperCategoriaEnumToCategoria();
+
+            ProdutoDto produto = _mapper.Map<ProdutoDto>(RealizarMapperParaProdutoDto(produtoViewDto));
+
+            produto.ConfigurarPrecoProduto();
+
             produto.AtualizarImagemProdutoBase64();
 
             var result = CompletedProductData(produto);
@@ -119,7 +129,7 @@ namespace GameStore.Service.Client
             result.UrlBlobStorage = produto.Url_path;
             result.ImagemProduto.SetUrlBlobStorage(produto.Url_path);
             result.Database64Content = produto.GetImagemProduto().GetDatabase64Content();
-            result.Arquivo = null;
+            //result.Arquivo = null;
             return result;
         }
         private HttpContent FormatContentData(ProdutoDto produto)
@@ -134,7 +144,7 @@ namespace GameStore.Service.Client
             HttpContent content = byteContent;
             return content;
         }
-        private ProdutoDto RealizarMapperParaProdutoDto(ProdutoDto produtoDto)
+        private ProdutoViewDto RealizarMapperParaProdutoDto(ProdutoViewDto produtoDto)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "ArquivosRecebidos");
 
@@ -165,6 +175,16 @@ namespace GameStore.Service.Client
             }
 
             return produtoDto;
+        }
+
+        public Task Create(ProdutoDto entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(ProdutoDto entity)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -1,7 +1,8 @@
-﻿@model GameStore.Domain.Dtos.ProdutoDto
+﻿@model GameStore.Domain.Dtos.ProdutoViewDto
 
 @{
     ViewData["Title"] = "Details";
+    var localExecution = ViewBag.LocalExecution as bool?;
 }
 
 <h3>Gestão de Produtos</h3>
@@ -35,21 +36,18 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Categoria)
             </dd>
-            
-            @{
-                if (!string.IsNullOrEmpty(Model.Database64Content))
-                {
-                    <img src="data:image/png;base64,@Model.Database64Content" alt="Imagem" class="imagem-produto" />
-                }
-                else
-                {
-                    <img src="@Model.UrlBlobStorage" alt="Imagem" class="imagem-produto" />
-                }
+            @if (localExecution.HasValue && localExecution.Value)
+            {                
+                <img src="data:image/png;base64,@Model.Database64Content" alt="Imagem" class="imagem-produto" />
+            }
+            else
+            {
+                <img src="@Model.UrlBlobStorage" class="imagem-produto" alt="@Model.Descricao">
             }
         </dl>
     </div>
 </div>
 <div>
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-    <a asp-action="IndexLista">Voltar</a>
+    <a asp-action="Index">Voltar</a>
 </div>

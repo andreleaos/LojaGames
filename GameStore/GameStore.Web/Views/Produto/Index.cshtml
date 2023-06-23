@@ -1,6 +1,7 @@
-﻿@model IEnumerable<GameStore.Domain.Dtos.ProdutoDto>
+﻿@model IEnumerable<GameStore.Domain.Dtos.ProdutoViewDto>
 @{
     ViewData["Title"] = "Produtos";
+    var localExecution = ViewBag.LocalExecution as bool?;
 }
 
 <head>
@@ -73,7 +74,16 @@
                         @foreach (var item in Model)
                         {
                             <div class="carousel-item @(contador == 0 ? "active" : "")">
-                                <img src="@item.UrlBlobStorage" class="mx-auto d-block w-30" alt="@item.Descricao">
+
+                                @if (localExecution.HasValue && localExecution.Value)
+                                {
+                                    <img src="data:image/png;base64,@item.Database64Content" alt="Imagem" class="mx-auto d-block w-30" />
+                                }
+                                else
+                                {
+                                    <img src="@item.UrlBlobStorage" class="mx-auto d-block w-30" alt="@item.Descricao">
+                                }
+
                                 <div class="carousel-caption d-none d-md-block ">
                                     <h5>@item.Descricao</h5>
                                     <p>@item.Categoria</p>

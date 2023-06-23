@@ -1,0 +1,8 @@
+CREATE PROCEDURE [dbo].[SP_SEL_COUNT_CATEGORIA]
+AS
+BEGIN
+	SELECT 
+		COUNT(*) 
+	FROM 
+		[dbo].[categoria]
+END

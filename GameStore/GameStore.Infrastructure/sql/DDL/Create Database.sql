@@ -1,5 +1,4 @@
-USE [master]
-GO
+USE master
 
 IF DB_ID('lojaGamesDB') IS NULL
 BEGIN

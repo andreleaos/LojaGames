@@ -30,6 +30,9 @@ az storage container create --account-name gamestorestech --name images --public
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings ASPNETCORE_ENVIRONMENT="Development"
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings API_PRODUTOS="https://gamestorestechapi.azurewebsites.net/api/produto"
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings API_SIMPLES="https://gamestorestechapi.azurewebsites.net/api/simple"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings API_CATEGORIAS="https://gamestorestechapi.azurewebsites.net/api/categoria"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings EnableLocalExecution="false"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTech --settings LocalPathImages=""
 
 
 #obtendo a connection string do blob storage
@@ -39,6 +42,8 @@ az storage account show-connection-string --resource-group rg-GameStoresTech --n
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ConnectionStorageAccount="DefaultEndpointsProtocol=https;AccountName=gamestorestech;AccountKey=zFhyx89yI9c7hg8OgadasfhsdfhzJDjTe7W3w/9cEpS1EaGmjw7E9AfWt+VasRpvjZHkYclKXXzEeKI7BVcVZ+AStWIGOlQ==;EndpointSuffix=core.windows.net"
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ContainerBlobStorage="images"
 az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ASPNETCORE_ENVIRONMENT="Development"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings ASPNETCORE_ENVIRONMENT="Development"
+az webapp config appsettings set --resource-group rg-GameStoresTech --name GameStoresTechApi --settings EnableLocalExecution="false"
 
 
 #criando um Server

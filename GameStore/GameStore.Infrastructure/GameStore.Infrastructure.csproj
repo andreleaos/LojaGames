@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,23 +7,54 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="sql\DDL\Create Database.sql" />
     <None Remove="sql\DDL\Create Table - 01 - categoria.sql" />
     <None Remove="sql\DDL\Create Table - 02 - imagemProduto.sql" />
     <None Remove="sql\DDL\Create Table - 03 - produto.sql" />
     <None Remove="sql\DML\Insert categoria.sql" />
+    <None Remove="sql\Procedures\SP_DEL_EXCLUIR_IMAGEM.sql" />
+    <None Remove="sql\Procedures\SP_DEL_EXCLUIR_PRODUTO.sql" />
+    <None Remove="sql\Procedures\SP_INS_CADASTRAR_IMAGEM.sql" />
+    <None Remove="sql\Procedures\SP_INS_CADASTRAR_PRODUTO.sql" />
+    <None Remove="sql\Procedures\SP_SEL_COUNT_CATEGORIA.sql" />
+    <None Remove="sql\Procedures\SP_SEL_LISTAR_CATEGORIA.sql" />
+    <None Remove="sql\Procedures\SP_SEL_LISTAR_PRODUTO.sql" />
+    <None Remove="sql\Procedures\SP_SEL_PESQUISAR_IMAGEM_PELA_URL.sql" />
+    <None Remove="sql\Procedures\SP_SEL_PESQUISAR_PRODUTO.sql" />
+    <None Remove="sql\Procedures\SP_SEL_VERIFICAR_PROCEDURE_EXISTENTE_POR_NOME.sql" />
+    <None Remove="sql\Procedures\SP_SEL_VERIFICAR_TABELA_CATEGORIA_SEED.sql" />
+    <None Remove="sql\Procedures\SP_SEL_VERIFICAR_TABELA_EXISTENTE_POR_NOME.sql" />
+    <None Remove="sql\Procedures\SP_UPD_ATUALIZAR_IMAGEM.sql" />
+    <None Remove="sql\Procedures\SP_UPD_ATUALIZAR_PRODUTO.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="sql\DDL\Create Database.sql" />
     <EmbeddedResource Include="sql\DDL\Create Table - 01 - categoria.sql" />
     <EmbeddedResource Include="sql\DDL\Create Table - 02 - imagemProduto.sql" />
     <EmbeddedResource Include="sql\DDL\Create Table - 03 - produto.sql" />
     <EmbeddedResource Include="sql\DML\Insert categoria.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_DEL_EXCLUIR_IMAGEM.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_DEL_EXCLUIR_PRODUTO.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_INS_CADASTRAR_IMAGEM.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_INS_CADASTRAR_PRODUTO.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_LISTAR_CATEGORIA.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_LISTAR_PRODUTO.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_COUNT_CATEGORIA.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_VERIFICAR_TABELA_CATEGORIA_SEED.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_VERIFICAR_TABELA_EXISTENTE_POR_NOME.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_VERIFICAR_PROCEDURE_EXISTENTE_POR_NOME.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_PESQUISAR_IMAGEM_PELA_URL.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_SEL_PESQUISAR_PRODUTO.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_UPD_ATUALIZAR_IMAGEM.sql" />
+    <EmbeddedResource Include="sql\Procedures\SP_UPD_ATUALIZAR_PRODUTO.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
