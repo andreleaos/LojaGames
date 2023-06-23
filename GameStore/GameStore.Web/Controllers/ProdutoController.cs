@@ -52,6 +52,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Details(int id)
         {
             ProdutoViewDto? produto = await _client.GetById(id);
+            ViewBag.LocalExecution = _local_execution;
             return View(produto);
         }
 
