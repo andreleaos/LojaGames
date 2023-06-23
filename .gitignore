@@ -6,6 +6,18 @@ GameStore/GameStore.Web/obj
 GameStore/GameStore.Api/bin
 GameStore/GameStore.Api/obj
 
+GameStore/GameStore.Api/Properties/PublishProfiles
+GameStore/GameStore.Api/Properties/PublishProfiles/*
+
+GameStore/GameStore.Api/Properties/ServiceDependencies
+GameStore/GameStore.Api/Properties/ServiceDependencies/*
+
+GameStore/GameStore.Web/Arquivos/Recebidos
+GameStore/GameStore.Web/Arquivos/Recebidos/*
+
+GameStore/GameStore.Web/Properties
+GameStore/GameStore.Web/Properties/*
+
 GameStore/GameStore.Domain/bin
 GameStore/GameStore.Domain/obj
 
@@ -37,3 +49,9 @@ GameStore/GameStore.Service/obj/*
 /GameStore/GameStore.Web/GameStore.Web.csproj.user
 /GameStore/GameStore.Web/Views/Shared/_Layout - Copy.cshtml
 /GameStore/GameStore.Web/Views/Shared/_Layout - Copy.cshtml.css
+
+/GameStore/GameStore.Web/Arquivos
+/GameStore/GameStore.Web/Arquivos/*
+
+/GameStore/GameStore.Web/Arquivo
+/GameStore/GameStore.Web/Arquivo/*

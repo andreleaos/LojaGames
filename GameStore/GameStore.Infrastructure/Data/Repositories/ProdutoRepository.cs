@@ -30,7 +30,10 @@ namespace GameStore.Infrastructure.Data.Repositories
 
         #region Construtor
 
-        public ProdutoRepository(IConfiguration configuration, IConfigParameters configParameters, ILogger<ProdutoRepository> logger)
+        public ProdutoRepository(
+            IConfiguration configuration, 
+            IConfigParameters configParameters,
+            ILogger<ProdutoRepository> logger)
         {
             _configuration = configuration;
             _configParameters = configParameters;
@@ -75,7 +78,9 @@ namespace GameStore.Infrastructure.Data.Repositories
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        throw new Exception($"Erro ao realizar o cadastro. {ex.Message}");
+                        var msg = $"[Repository] - Erro ao realizar o cadastro. {ex.Message}";
+                        _logger.LogInformation(msg);
+                        throw new Exception(msg);
                     }
                     finally
                     {
@@ -168,7 +173,9 @@ namespace GameStore.Infrastructure.Data.Repositories
                             var sql = SqlManager.GetSql(TSqlQuery.ATUALIZAR_PRODUTO);
                             connection.Execute(
                                 sql, 
+
                                 new { descricao = produto.GetDescricao(), precoUnitario = produto.GetPrecoUnitario(), categoriaId = produto.CategoriaId, id = produto.GetId() }, 
+
                                 transaction
                             );
 
