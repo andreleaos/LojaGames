@@ -109,6 +109,9 @@ namespace GameStore.Service.Services
 
         private string UploadBase64ImageBlobStorage(string base64Image, string container, string urlImagem)
         {
+            if (_local_execution)
+                return urlImagem;
+
             FileInfo fileInfo = new FileInfo(urlImagem);
 
             // Gera um nome randomico para imagem

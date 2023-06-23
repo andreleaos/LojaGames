@@ -45,6 +45,7 @@ namespace GameStore.Domain.Entities
 
         public string GetDatabase64Content()
         {
+
             return Database64Content;
         }
         public void SetDatabase64Content(string data) => Database64Content = data;
