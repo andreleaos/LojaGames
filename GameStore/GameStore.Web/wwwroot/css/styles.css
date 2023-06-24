@@ -1,0 +1,22 @@
+﻿#carrossel {
+    width: 250px; /* Ajuste o tamanho conforme necessário */
+    height: 300px; /* Ajuste o tamanho conforme necessário */
+    overflow: hidden;
+}
+
+#carrossel img {
+    width: 100%; /* Imagens ocupam toda a largura do carrossel */
+    height: auto; /* Altura ajustada automaticamente */
+    display: none; /* Escondendo todas as imagens por padrão */
+}
+
+.justified-text {
+    text-align: justify;
+}
+
+/*.container {
+    display: flex;
+    justify-content: center;*/ /* Centraliza horizontalmente */
+    /*align-items: center;*/ /* Centraliza verticalmente */
+/*}*/
+
