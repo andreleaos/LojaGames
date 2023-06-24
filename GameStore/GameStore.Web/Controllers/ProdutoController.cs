@@ -70,7 +70,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Create(ProdutoViewDto produtoViewDto)
         {
             await _client.Create(produtoViewDto);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLista");
         }
 
         #endregion
@@ -86,7 +86,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Delete([Bind("Id, Descricao, PrecoUnitario, Categoria, UrlImagem")] ProdutoDto produto)
         {
             await _client.Delete(produto.Id);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLista");
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace GameStore.Web.Controllers
         public async Task<IActionResult> Edit(ProdutoViewDto produtoViewDto)
         {
             await _client.Update(produtoViewDto);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLista");
         }
 
         #endregion
