@@ -41,8 +41,8 @@ namespace GameStore.Domain.Dtos
         {
             get
             {
-                string precoFormat = Math.Round(PrecoUnitario, 2).ToString();
-                return $"R$ {precoFormat}";
+                string precoFormat = PrecoUnitario.ToString("C2");
+                return $"{precoFormat}";
             }
         }
 

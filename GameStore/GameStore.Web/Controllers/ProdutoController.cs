@@ -6,6 +6,7 @@ using GameStore.Service.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using NuGet.Protocol.Core.Types;
+using System.Globalization;
 
 namespace GameStore.Web.Controllers
 {

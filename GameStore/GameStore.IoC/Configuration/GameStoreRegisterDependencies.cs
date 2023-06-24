@@ -3,8 +3,11 @@ using GameStore.Infrastructure.Config;
 using GameStore.Infrastructure.Data.Repositories;
 using GameStore.Service.Client;
 using GameStore.Service.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 namespace GameStore.IoC.Configuration
 {
@@ -16,6 +19,19 @@ namespace GameStore.IoC.Configuration
             AddServicesDependencies(services);
             AddAutoMapper(services);
             ConfigureDatabase(configuration);
+            SetCurrentCulture(services, configuration);
+        }
+
+        private static void SetCurrentCulture(IServiceCollection services, IConfiguration configuration)
+        {
+            string culture = configuration.GetSection("CurrentCulture").Value;
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture(culture);
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo(culture) };
+                options.SupportedUICultures = new List<CultureInfo> { new CultureInfo(culture) };
+            });
         }
 
         private static void AddInfrastructureDependencies(IServiceCollection services)

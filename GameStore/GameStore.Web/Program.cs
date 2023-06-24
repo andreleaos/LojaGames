@@ -1,4 +1,5 @@
 using GameStore.IoC.Configuration;
+using System.Globalization;
 
 namespace GameStore.Web
 {
@@ -9,6 +10,8 @@ namespace GameStore.Web
             var builder = WebApplication.CreateBuilder(args);
 
             GameStoreRegisterDependencies.Configure(builder.Services, builder.Configuration);
+
+            SetCurrency();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -35,6 +38,11 @@ namespace GameStore.Web
                 pattern: "{controller=Produto}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        private static void SetCurrency()
+        {
+            CultureInfo cultureInfo = new CultureInfo("pt-BR");
         }
     }
 }
