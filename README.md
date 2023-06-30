@@ -76,4 +76,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **André Leão da Silva** - _Desenvolvedor_ - [andreleaos](https://github.com/andreleaos)
 - **André Bessa da Silva** - _Desenvolvedor_  - [bessax](https://github.com/bessax)
 - **Liandro Freire dos Anjos** - _Desenvolvedor_  - [liandro](oliverliandro@gmail.com)
-  **Diogo da Franca Rodrigues** - _Desenvolvedor_  - [diogo](diogo_f.rodrigues@hotmail.com)
+- **Diogo da Franca Rodrigues** - _Desenvolvedor_  - [diogo](diogo_f.rodrigues@hotmail.com)
