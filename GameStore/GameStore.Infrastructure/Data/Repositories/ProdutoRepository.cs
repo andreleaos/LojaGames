@@ -497,7 +497,7 @@ namespace GameStore.Infrastructure.Data.Repositories
             {
                 try
                 {
-                    _connectionString = _connectionString.Replace("Database=LojaGamesDB", "Database=master");
+                    _connectionString = _connectionString.Replace("Database=LojaGamesDB", "Database=master").Replace("Catalog=LojaGamesDB", "Catalog=master");
                     using (var connection = new SqlConnection(_connectionString))
                     {
                         connection.Open();
