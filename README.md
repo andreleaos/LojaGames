@@ -1,5 +1,5 @@
 <h1 align="center"> Tech Challenge - Grupo 31 </h1>
-<h3 align="center">Desenvolvimento do projeto GameStore. 😄</h3>
+<h3 align="center">Desenvolvimento do projeto GameStore.</h3>
 
 ## 📚 Sobre o projeto
 
