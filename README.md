@@ -14,7 +14,7 @@ O projeto está sendo desenvolvido em grupo, com o objetivo de compartilhar conh
 
 ### 📋 Pré-requisitos
 
-- [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0)
+- [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 - [Sql Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
 
 ### 🎲 Banco de dados
