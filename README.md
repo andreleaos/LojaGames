@@ -72,8 +72,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ## ✒️ Colaborador(as/es)
 
-- **Fernando Augusto Ribeiro Alves** - _Desenvolvedor_  - [Faralves](https://github.com/faralves)
-- **André Leão da Silva** - _Desenvolvedor_ - [andreleaos](https://github.com/andreleaos)
 - **André Bessa da Silva** - _Desenvolvedor_  - [bessax](https://github.com/bessax)
-- **Liandro Freire dos Anjos** - _Desenvolvedor_  - [liandro](oliverliandro@gmail.com)
+- **André Leão da Silva** - _Desenvolvedor_ - [andreleaos](https://github.com/andreleaos)
 - **Diogo da Franca Rodrigues** - _Desenvolvedor_  - [diogo](diogo_f.rodrigues@hotmail.com)
+- **Fernando Augusto Ribeiro Alves** - _Desenvolvedor_  - [Faralves](https://github.com/faralves)
+- **Liandro Freire dos Anjos** - _Desenvolvedor_  - [liandro](oliverliandro@gmail.com)
